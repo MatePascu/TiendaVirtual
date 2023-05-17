@@ -1,13 +1,11 @@
 <?php 
 
 	class Roles extends Controllers{
-		public function __construct()
-		{
+		public function __construct(){
 			parent::__construct();
 		}
 
-		public function Roles()
-		{
+		public function Roles(){
 			$data['page_id'] = 3;
 			$data['page_tag'] = "Roles Usuario";
 			$data['page_name'] = "rol_usuario";
@@ -16,14 +14,11 @@
 			$this->views->getView($this,"roles",$data);
 		}
 
-		public function getRoles()
-		{
+		public function getRoles(){
 			$arrData = $this->model->selectRoles();
 
 			for ($i=0; $i < count($arrData); $i++) {
-
-				if($arrData[$i]['status'] == 1)
-				{
+				if($arrData[$i]['status'] == 1){
 					$arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
 				}else{
 					$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
@@ -39,8 +34,7 @@
 			die();
 		}
 
-		public function getSelectRoles()
-		{
+		public function getSelectRoles(){
 			$htmlOptions = "";
 			$arrData = $this->model->selectRoles();
 			if(count($arrData) > 0 ){
@@ -54,14 +48,11 @@
 			die();		
 		}
 
-		public function getRol(int $idrol)
-		{
+		public function getRol(int $idrol){
 			$intIdrol = intval(strClean($idrol));
-			if($intIdrol > 0)
-			{
+			if($intIdrol > 0){
 				$arrData = $this->model->selectRol($intIdrol);
-				if(empty($arrData))
-				{
+				if(empty($arrData)){
 					$arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
 				}else{
 					$arrResponse = array('status' => true, 'data' => $arrData);
@@ -72,14 +63,12 @@
 		}
 
 		public function setRol(){
-			
 			$intIdrol = intval($_POST['idRol']);
 			$strRol =  strClean($_POST['txtNombre']);
 			$strDescipcion = strClean($_POST['txtDescripcion']);
 			$intStatus = intval($_POST['listStatus']);
 
-			if($intIdrol == 0)
-			{
+			if($intIdrol == 0){
 				//Crear
 				$request_rol = $this->model->insertRol($strRol, $strDescipcion,$intStatus);
 				$option = 1;
@@ -89,8 +78,7 @@
 				$option = 2;
 			}
 
-			if($request_rol > 0 )
-			{
+			if($request_rol > 0 ){
 				if($option == 1)
 				{
 					$arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
@@ -107,8 +95,7 @@
 			die();
 		}
 
-		public function delRol()
-		{
+		public function delRol(){
 			if($_POST){
 				$intIdrol = intval($_POST['idrol']);
 				$requestDelete = $this->model->deleteRol($intIdrol);
@@ -124,6 +111,5 @@
 			}
 			die();
 		}
-
 	}
- ?>
+?>

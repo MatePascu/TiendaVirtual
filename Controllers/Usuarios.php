@@ -1,13 +1,11 @@
 <?php 
 
 	class Usuarios extends Controllers{
-		public function __construct()
-		{
+		public function __construct(){
 			parent::__construct();
 		}
 
-		public function Usuarios()
-		{
+		public function Usuarios(){
 			$data['page_tag'] = "Usuarios";
 			$data['page_title'] = "USUARIOS <small>Tienda Virtual</small>";
 			$data['page_name'] = "usuarios";
@@ -31,18 +29,17 @@
 					$intTipoId = intval(strClean($_POST['listRolid']));
 					$intStatus = intval(strClean($_POST['listStatus']));
 
-					if($idUsuario == 0)
-					{
+					if($idUsuario == 0){
 						$option = 1;
-						$strPassword =  empty($_POST['txtPassword']) ? hash("SHA256",passGenerator()) : hash("SHA256",$_POST['txtPassword']);
+						$strPassword = empty($_POST['txtPassword']) ? hash("SHA256",passGenerator()) : hash("SHA256",$_POST['txtPassword']);
 						$request_user = $this->model->insertUsuario($strIdentificacion,
-																			$strNombre, 
-																			$strApellido, 
-																			$intTelefono, 
-																			$strEmail,
-																			$strPassword, 
-																			$intTipoId, 
-																			$intStatus );
+																												$strNombre, 
+																												$strApellido, 
+																												$intTelefono,
+																												$strEmail,
+																												$strPassword,
+																												$intTipoId, 
+																												$intStatus );
 					}else{
 						$option = 2;
 						$strPassword =  empty($_POST['txtPassword']) ? "" : hash("SHA256",$_POST['txtPassword']);
@@ -55,18 +52,16 @@
 																	$strPassword, 
 																	$intTipoId, 
 																	$intStatus);
-
 					}
 
-					if($request_user > 0 )
-					{
+					if($request_user == 'exist'){
+						$arrResponse = array('status' => false, 'msg' => '¡Atención! el email o la identificación ya existe, ingrese otro.');		
+					}else if($request_user > 0){
 						if($option == 1){
 							$arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
 						}else{
 							$arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
 						}
-					}else if($request_user == 'exist'){
-						$arrResponse = array('status' => false, 'msg' => '¡Atención! el email o la identificación ya existe, ingrese otro.');		
 					}else{
 						$arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
 					}
@@ -76,13 +71,10 @@
 			die();
 		}
 
-		public function getUsuarios()
-		{
+		public function getUsuarios(){
 			$arrData = $this->model->selectUsuarios();
 			for ($i=0; $i < count($arrData); $i++) {
-
-				if($arrData[$i]['status'] == 1)
-				{
+				if($arrData[$i]['status'] == 1){
 					$arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
 				}else{
 					$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
@@ -101,8 +93,7 @@
 		public function getUsuario(int $idpersona){
 			
 			$idusuario = intval($idpersona);
-			if($idusuario > 0)
-			{
+			if($idusuario > 0){
 				$arrData = $this->model->selectUsuario($idusuario);
 				if(empty($arrData))
 				{
@@ -115,13 +106,11 @@
 			die();
 		}
 
-		public function delUsuario()
-		{
+		public function delUsuario(){
 			if($_POST){
 				$intIdpersona = intval($_POST['idUsuario']);
 				$requestDelete = $this->model->deleteUsuario($intIdpersona);
-				if($requestDelete)
-				{
+				if($requestDelete){
 					$arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el usuario');
 				}else{
 					$arrResponse = array('status' => false, 'msg' => 'Error al eliminar el usuario.');
@@ -130,6 +119,5 @@
 			}
 			die();
 		}
-
 	}
- ?>
+?>

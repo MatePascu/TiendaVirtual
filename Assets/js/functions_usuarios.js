@@ -62,8 +62,7 @@ document.addEventListener('DOMContentLoaded', function(){
         var intTipousuario = document.querySelector('#listRolid').value;
         var strPassword = document.querySelector('#txtPassword').value;
 
-        if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '')
-        {
+        if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == ''){
             swal("Atención", "Todos los campos son obligatorios." , "error");
             return false;
         }
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 swal("Atención", "Por favor verifique los campos en rojo." , "error");
                 return false;
             } 
-        } 
+        } // Valida si algun input del formulario tiene la clase is-invalid para no actualizar los datos
 
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = base_url+'/Usuarios/setUsuario'; 
@@ -84,8 +83,7 @@ document.addEventListener('DOMContentLoaded', function(){
         request.onreadystatechange = function(){
             if(request.readyState == 4 && request.status == 200){
                 var objData = JSON.parse(request.responseText);
-                if(objData.status)
-                {
+                if(objData.status){
                     $('#modalFormUsuario').modal("hide");
                     formUsuario.reset();
                     swal("Usuarios", objData.msg ,"success");
@@ -95,16 +93,15 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             }
         }
-
     }
 }, false);
 
 
 window.addEventListener('load', function() {
-        fntRolesUsuario();
-        /*fntViewUsuario();
-        fntEditUsuario();
-        fntDelUsuario();*/
+    fntRolesUsuario();
+    /*fntViewUsuario();
+    fntEditUsuario();
+    fntDelUsuario();*/
 }, false);
 
 function fntRolesUsuario(){
@@ -133,9 +130,8 @@ function fntViewUsuario(idpersona){
         if(request.readyState == 4 && request.status == 200){
             var objData = JSON.parse(request.responseText);
 
-            if(objData.status)
-            {
-               var estadoUsuario = objData.data.status == 1 ? 
+            if(objData.status){
+                var estadoUsuario = objData.data.status == 1 ? 
                 '<span class="badge badge-success">Activo</span>' : 
                 '<span class="badge badge-danger">Inactivo</span>';
 
@@ -161,7 +157,7 @@ function fntEditUsuario(idpersona){
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML ="Actualizar";
 
-    var idpersona =idpersona;
+    var idpersona = idpersona;
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     var ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
     request.open("GET",ajaxUrl,true);
@@ -171,8 +167,7 @@ function fntEditUsuario(idpersona){
         if(request.readyState == 4 && request.status == 200){
             var objData = JSON.parse(request.responseText);
 
-            if(objData.status)
-            {
+            if(objData.status){
                 document.querySelector("#idUsuario").value = objData.data.idpersona;
                 document.querySelector("#txtIdentificacion").value = objData.data.identificacion;
                 document.querySelector("#txtNombre").value = objData.data.nombre;
@@ -196,7 +191,6 @@ function fntEditUsuario(idpersona){
 }
 
 function fntDelUsuario(idpersona){
-
     var idUsuario = idpersona;
     swal({
         title: "Eliminar Usuario",
@@ -209,8 +203,7 @@ function fntDelUsuario(idpersona){
         closeOnCancel: true
     }, function(isConfirm) {
         
-        if (isConfirm) 
-        {
+        if (isConfirm) {
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Usuarios/delUsuario';
             var strData = "idUsuario="+idUsuario;
@@ -220,8 +213,7 @@ function fntDelUsuario(idpersona){
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     var objData = JSON.parse(request.responseText);
-                    if(objData.status)
-                    {
+                    if(objData.status){
                         swal("Eliminar!", objData.msg , "success");
                         tableUsuarios.api().ajax.reload(function(){
                             fntRolesUsuario();
@@ -235,9 +227,7 @@ function fntDelUsuario(idpersona){
                 }
             }
         }
-
     });
-
 }
 
 
