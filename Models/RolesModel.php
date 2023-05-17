@@ -12,7 +12,7 @@
 
 		public function selectRoles(){
 			//EXTRAE ROLES
-			$sql = "SELECT * FROM rol WHERE status != 0";
+			$sql = "SELECT * FROM rol";
 			$request = $this->select_all($sql);
 			return $request;
 		}
@@ -68,13 +68,11 @@
 			$this->intIdrol = $idrol;
 			$sql = "SELECT * FROM persona WHERE rolid = $this->intIdrol";
 			$request = $this->select_all($sql);
-			if(empty($request))
-			{
+			if(empty($request)){
 				$sql = "UPDATE rol SET status = ? WHERE idrol = $this->intIdrol ";
 				$arrData = array(0);
 				$request = $this->update($sql,$arrData);
-				if($request)
-				{
+				if($request){
 					$request = 'ok';	
 				}else{
 					$request = 'error';
