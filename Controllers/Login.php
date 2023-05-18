@@ -2,6 +2,9 @@
 	class Login extends Controllers{
 		public function __construct(){
       session_start();
+			if(isset($_SESSION['login'])){ // isset comprueba si existe una variable
+				header('Location: '.base_url().'/dashboard');
+			}
 			parent::__construct();
 		}
 

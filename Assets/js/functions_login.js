@@ -19,8 +19,21 @@ document.addEventListener('DOMContentLoaded', function(){
         var formData = new FormData(formLogin)
         request.open("POST", ajaxUrl, true)
         request.send(formData)
-
-        console.log(request)
+        request.onreadystatechange = function(){
+          if(request.readyState != 4) return false
+          if(request.status == 200){
+            var objData = JSON.parse(request.responseText)
+            if(objData.status){
+              window.location = base_url+'/dashboard' // window.location redirecciona a la url especificada
+            }else{
+              swal("Atencion", objData.msg, "error")
+              document.querySelector('txtPassword').value = ''
+            }
+          }else{
+            swal("Atencion", "Error en el proceso", "error")
+          }
+          return false
+        }
       }
     }
   }
