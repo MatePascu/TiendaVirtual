@@ -231,8 +231,7 @@ function fntDelUsuario(idpersona){
 }
 
 
-function openModal()
-{
+function openModal(){
     document.querySelector('#idUsuario').value ="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
