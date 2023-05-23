@@ -28,5 +28,22 @@
       $request = $this->select($sql);
       return $request;
     }
+
+    public function getUserEmail(string $strEmail){
+      $this->strUsuario = $strEmail;
+      $sql = "SELECT idpersona, nombre, apellido, status FROM persona 
+              WHERE email_user = '$this->strUsuario' and status = 1";
+      $request = $this->select($sql);
+      return $request;
+    }
+    
+    public function setTokenUser(int $idpersona, string $token){
+      $this->intIdUsuario = $idpersona;
+      $this->strToken = $token;
+      $sql = "UPDATE persona SET token = ? WHERE idpersona = $this->intIdUsuario";
+      $arrData = array($this->strToken);
+      $request = $this->update($sql, $arrData);
+      return $request;
+    }
 	}
 ?>
