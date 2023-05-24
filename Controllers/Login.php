@@ -72,11 +72,31 @@
     }
 
     public function confirmUser(string $params){
-      $arrData['page_tag'] = "Cambiar contraseña";
-			$arrData['page_title'] = "Cambiar Contraseña";
-			$arrData['page_name'] = "cambiar_contrasenia";
-			$arrData['idpersona'] = 1;
-      $this->views->getView($this, 'cambiar_password', $arrData);
+      if(empty($params)){
+        header('Location: '.base_url());
+      }else{
+        $arrParams = explode(',', $params); // Explode separa un string teniendo en cuenta el caracter indicado (,) y los guarda en un array
+        $strEmail = strClean($arrParams[0]);
+        $strToken = strClean($arrParams[1]);
+
+        $arrResponse = $this->model->getUsuario($strEmail, $strToken);
+        if(empty($arrResponse)){
+          header('Location: '.base_url());
+        }else{
+          $data['page_tag'] = "Cambiar contraseña";
+          $data['page_title'] = "Cambiar Contraseña";
+          $data['page_name'] = "cambiar_contrasenia";
+          $data['idpersona'] = $arrResponse['idpersona'];
+          $data['page_functions_js'] = "functions_login.js";
+          $this->views->getView($this, 'cambiar_password', $data);
+        }
+      }
+      die();
+    }
+
+    public function setPassword(){
+      dep($_POST);
+      die();
     }
 	}
 ?>

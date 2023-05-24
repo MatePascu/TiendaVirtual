@@ -78,6 +78,39 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
   }
+  if(document.querySelector('#formCambiarPass')){
+    let formCambiarPass = document.querySelector('#formCambiarPass')
+    formCambiarPass.onsubmit = function(e){
+      e.preventDefault()
+      let strPassword = document.querySelector('#txtPassword').value
+      let strPasswordConfirm = document.querySelector('#txtPasswordConfirm').value
+      let idUsuario = document.querySelector('#idUsuario').value
+      if(strPassword == '' || strPasswordConfirm == ''){
+        swal('Por favor', 'Escribe la nueva contraseña', 'error');
+        return false;
+      }else{
+        if(strPassword.length < 5){
+          swal('Atencion', 'La contraseña debe tener un minimo de 5 caracteres', 'info');
+          return false;
+        }
+        if(strPassword != strPasswordConfirm){
+          swal('Atencion', 'Las contraseñas no son iguales', 'error');
+          return false;
+        }
+        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP')
+        var ajaxUrl = base_url+'/Login/setPassword'
+        var formData = new FormData(formCambiarPass)
+        request.open('POST', ajaxUrl, true)
+        request.send(formData)
+        request.onreadystatechange = function(){
+          if(request.readyState != 4) return false
+          if(request.status == 200){
+            console.log(request.responseText)
+          }
+        }
+      }
+    }
+  }
 }, false)
 
 /* http://localhost/tienda_virtual/login/confirmUser/mateo@gmail.com/
