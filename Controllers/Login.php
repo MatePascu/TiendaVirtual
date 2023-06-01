@@ -46,6 +46,8 @@
 
     public function resetPass(){
       if($_POST){
+        error_reporting(0); //Envita que se envien errores
+
         if(empty($_POST['txtEmailReset'])){
           $arrResponse = array('status' => false, 'msg' => 'Error de datos');
         }else{
@@ -59,8 +61,19 @@
             $nombreUsuario = $arrData['nombre'].' '.$arrData['apellido'];
             $url_recovery = base_url().'login/confirmUser/'.$strEmail.'/'.$token;
             $requestUpdate = $this->model->setTokenUser($idpersona, $token);
+
+            $dataUsuario = array ('nombreUsuario' => $nombreUsuario,
+                                  'email' => $strEmail,
+                                  'asunto' => 'Recuperar cuenta - '.NOMBRE_REMITENTE,
+                                  'url_recovery' => $url_recovery);
+
             if($requestUpdate){
-              $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un email a tu correo para cambiar la contraseña.');
+              $sendEmail = sendEmail($dataUsuario, 'email_cambioPassword');
+              if($sendEmail){
+                $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un email a tu correo para cambiar la contraseña.');
+              }else{
+                $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
+              }
             }else{
               $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intenta más tarde.');
             }
@@ -85,6 +98,8 @@
         }else{
           $data['page_tag'] = "Cambiar contraseña";
           $data['page_title'] = "Cambiar Contraseña";
+          $data['email'] = $strEmail;
+          $data['token'] = $strToken;
           $data['page_name'] = "cambiar_contrasenia";
           $data['idpersona'] = $arrResponse['idpersona'];
           $data['page_functions_js'] = "functions_login.js";
@@ -95,7 +110,33 @@
     }
 
     public function setPassword(){
-      dep($_POST);
+      if(empty($_POST['idUsuario']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm']) || empty($_POST['txtToken']) || empty($_POST['txtEmail'])){
+        $arrResponse = array('status' => false, 'msg' => 'Error de datos');
+      }else{
+        $intIdpersona = intval($_POST['idUsuario']);
+        $strPassword = $_POST['txtPassword'];
+        $strEmail = strClean($_POST['txtEmail']);
+        $strToken = strClean($_POST['txtToken']);
+        $strPasswordConfirm = $_POST['txtPasswordConfirm'];
+
+        if($strPassword != $strPasswordConfirm){
+          $arrResponse = array('status' => false, 'msg' => 'Las contraseñas no son iguales');
+        }else{
+          $arrResponseUser = $this->model->getUsuario($strEmail, $strToken);
+          if(empty($arrResponseUser)){
+            $arrResponse = array('status' => false, 'msg' => 'Error de datos');
+          }else{
+            $strPassword = hash("SHA256", $strPassword);
+            $requestPass = $this->model->insertPassword($intIdpersona, $strPassword);
+            if($requestPass){
+              $arrResponse = array('status' => true, 'msg' => 'Contraseña actualizada con exito.');
+            }else{
+              $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intente mas tarde.');
+            }
+          }
+        }
+      }
+      echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
       die();
     }
 	}

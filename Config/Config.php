@@ -20,4 +20,9 @@
 	//Simbolo de moneda
 	const SMONEY = "$";
 
+	//Datos envio correo
+	const NOMBRE_REMITENTE = "Tienda Virtual";
+	const EMAIL_REMITENTE = "matepascucci2000@gmail.com";
+	const NOMBRE_EMPRESA = "Tienda Virtual";
+	const WEB_EMPRESA = "https://portfolio-mp.netlify.app";
 ?>

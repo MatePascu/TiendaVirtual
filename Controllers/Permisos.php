@@ -14,18 +14,19 @@
 				$arrPermisoRol = array('idrol' => $rolid );
 
 				if(empty($arrPermisosRol)){
-					for ($i=0; $i < count($arrModulos) ; $i++) { 
+					for ($i=0; $i < count($arrModulos) ; $i++) { //Si no tiene permisos los asigna a todos en 0
 						$arrModulos[$i]['permisos'] = $arrPermisos;
 					}
 				}else{
-					for ($i=0; $i < count($arrModulos); $i++) {
-						$arrPermisos = array('r' => $arrPermisosRol[$i]['r'], 
-																'w' => $arrPermisosRol[$i]['w'], 
-																'u' => $arrPermisosRol[$i]['u'], 
-																'd' => $arrPermisosRol[$i]['d']);
-						if($arrModulos[$i]['idmodulo'] == $arrPermisosRol[$i]['moduloid']){
-							$arrModulos[$i]['permisos'] = $arrPermisos;
+					for ($i=0; $i < count($arrModulos); $i++) { //Si tiene permisos recorre el array y se los va asignando
+						$arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
+						if(isset($arrPermisosRol[$i])){
+							$arrPermisos = array('r' => $arrPermisosRol[$i]['r'], 
+																	'w' => $arrPermisosRol[$i]['w'], 
+																	'u' => $arrPermisosRol[$i]['u'], 
+																	'd' => $arrPermisosRol[$i]['d']); 
 						}
+						$arrModulos[$i]['permisos'] = $arrPermisos; //Si el modulo no tiene permisos asignado aca se le asignan todos en 0
 					}
 				}
 				$arrPermisoRol['modulos'] = $arrModulos;
