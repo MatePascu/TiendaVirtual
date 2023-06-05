@@ -20,12 +20,13 @@
       return $request;
     }
 
-    public function sessionLogin(int $iduser){
+    public function sessionLogin(int $iduser){ //Obtiene todos los datos del usuario especificado (por id) y los guarda en una variable de sesion
       $this->intIdUsuario = $iduser;
       $sql = "SELECT p.idpersona, p.identificacion, p.nombre, p.apellido, p.telefono, p.email_user,
       p.nit, p.nombrefiscal, p.direccionfiscal, r.idrol, r.nombrerol, p.status
       FROM persona p INNER JOIN rol r ON p.rolid = r.idrol WHERE p.idpersona = $this->intIdUsuario";
       $request = $this->select($sql);
+      $_SESSION['userData'] = $request;
       return $request;
     }
 

@@ -32,7 +32,7 @@
               $_SESSION['idUser'] = $arrData['idpersona'];
               $_SESSION['login'] = true;
               $arrData = $this->model->sessionLogin($_SESSION['idUser']);
-              $_SESSION['userData'] = $arrData;
+              sessionUser($_SESSION['idUser']); //Funcion en helpers
               $arrResponse = array('status' => true, 'msg' => 'ok');
             }else{
               $arrResponse = array('status' => false, 'msg' => 'Usuario inactivo');
