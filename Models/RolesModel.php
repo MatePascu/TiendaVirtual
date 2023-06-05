@@ -11,8 +11,12 @@
 		}
 
 		public function selectRoles(){
+			$whereAdmin = '';
+			if($_SESSION['idUser'] != 1){ //Si idUser no es 1 (oseo no esta en uso el usuario root) no extrae el rol administrador, por q solo el root puede crear usuarios administradores
+				$whereAdmin = " and idrol != 1 ";
+			}
 			//EXTRAE ROLES
-			$sql = "SELECT * FROM rol";
+			$sql = "SELECT * FROM rol WHERE status != 0".$whereAdmin;
 			$request = $this->select_all($sql);
 			return $request;
 		}

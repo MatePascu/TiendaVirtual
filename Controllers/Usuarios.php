@@ -57,7 +57,7 @@
 																	$intStatus);
 					}
 
-					if($request_user == 'exist'){
+					if($request_user === 'exist'){
 						$arrResponse = array('status' => false, 'msg' => '¡Atención! el email o la identificación ya existe, ingrese otro.');		
 					}else if($request_user > 0){
 						if($option == 1){
@@ -90,10 +90,22 @@
 					$btnView = '<button class="btn btn-info btn-sm btnViewUsuario" onClick="fntViewUsuario('.$arrData[$i]['idpersona'].')" title="Ver usuario"><i class="far fa-eye"></i></button>';
 				}
 				if($_SESSION['permisosMod']['u']){
-					$btnEdit = '<button class="btn btn-primary  btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
+					if(($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) || //Para mostrar el btn editar usuario verifica si el usuario logeado es el root lo habilita para todos los usuario
+					($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and //O verifica si el usuario logeado es un admin y el usuario al que se le asigna el btn edit no lo es lo habilita tambien
+					($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'])){  
+						$btnEdit = '<button class="btn btn-primary btn-sm btnEditUsuario" onClick="fntEditUsuario('.$arrData[$i]['idpersona'].')" title="Editar usuario"><i class="fas fa-pencil-alt"></i></button>';
+					}else{
+						$btnEdit = '<button class="btn btn-secondary btn-sm" disabled><i class="fas fa-pencil-alt"></i></button>';
+					}
 				}
 				if($_SESSION['permisosMod']['d']){
-					$btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>';
+					if(($_SESSION['idUser'] == 1 and $_SESSION['userData']['idrol'] == 1) ||
+					($_SESSION['userData']['idrol'] == 1 and $arrData[$i]['idrol'] != 1) and 
+					($_SESSION['userData']['idpersona'] != $arrData[$i]['idpersona'])){ //Verifica que el usuario logeado no sea el mismo que el de la tabla, por q un usuario no se puede eliminar a si mismo en esta seccion
+						$btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario('.$arrData[$i]['idpersona'].')" title="Eliminar usuario"><i class="far fa-trash-alt"></i></button>';
+					}else{
+						$btnDelete = '<button class="btn btn-secondary btn-sm" disabled><i class="far fa-trash-alt"></i></button>';
+					}
 				}
 
 				$arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
