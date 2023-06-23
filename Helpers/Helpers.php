@@ -64,6 +64,18 @@
         $request = $objLogin->sessionLogin($idpersona);
         return $request;
     }
+    /* function sessionStart(){
+        session_start();//Inicia las variables de sesion para poder usarlar
+        $inactive = 20;
+        if(isset($_SESSION['timeout'])){ //Comprueba si existe esa variable
+            $session_in = time() - $_SESSION['inicio']; //Resto el tiempo actual con el tiempo al inicio de sesion para saber cuanto tiempo lleva logeado el usuario
+            if($session_in > $inactive){ // Comprueba si el tiempo q lleva logeado es mayor al tiempo maximo
+                header("Location: ".BASE_URL."/logout");
+            }else{
+                header("Location: ".BASE_URL."/logout");
+            }
+        }
+    } */
     //Elimina exceso de espacios entre palabras
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);

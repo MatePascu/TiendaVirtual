@@ -31,6 +31,8 @@
             if($arrData['status'] == 1){
               $_SESSION['idUser'] = $arrData['idpersona'];
               $_SESSION['login'] = true;
+              $_SESSION['timeout'] = true;
+              $_SESSION['inicio'] = time(); //time funcion de php q devuelve hora en int
               $arrData = $this->model->sessionLogin($_SESSION['idUser']);
               sessionUser($_SESSION['idUser']); //Funcion en helpers
               $arrResponse = array('status' => true, 'msg' => 'ok');
