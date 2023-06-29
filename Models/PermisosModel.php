@@ -46,7 +46,6 @@
 
 		public function permisosModulo(int $idrol){
 			$this->intRolid = $idrol;
-			dep($this->intRolid);
 			$sql = "SELECT p.rolid, p.moduloid, m.titulo as modulo, p.r, p.w, p.u, p.d
 							FROM permisos p INNER JOIN modulo m ON p.moduloid = m.idmodulo
 							WHERE p.rolid = $this->intRolid";
