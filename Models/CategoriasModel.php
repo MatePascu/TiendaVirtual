@@ -40,15 +40,15 @@
 			$request = $this->select_all($sql);
 			return $request;
 		}
-/* 
+
 		public function selectCategoria(int $idcategoria){
 			$this->intIdcategoria = $idcategoria;
 			$sql = "SELECT * FROM categoria
-					WHERE idcategoria = $this->intIdcategoria";
+							WHERE idcategoria = $this->intIdcategoria";
 			$request = $this->select($sql);
 			return $request;
 		}
-
+/* 
 		public function updateCategoria(int $idcategoria, string $categoria, string $descripcion, string $portada, int $status){
 			$this->intIdcategoria = $idcategoria;
 			$this->strCategoria = $categoria;

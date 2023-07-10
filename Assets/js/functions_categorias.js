@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }
 }, false);
-/* 
+
 function fntViewInfo(idcategoria){
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     let ajaxUrl = base_url+'/Categorias/getCategoria/'+idcategoria;
@@ -152,8 +152,7 @@ function fntViewInfo(idcategoria){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status)
-            {
+            if(objData.status){
                 let estado = objData.data.status == 1 ? 
                 '<span class="badge badge-success">Activo</span>' : 
                 '<span class="badge badge-danger">Inactivo</span>';
@@ -169,7 +168,7 @@ function fntViewInfo(idcategoria){
         }
     }
 }
-
+/* 
 function fntEditInfo(element,idcategoria){
     rowTable = element.parentNode.parentNode.parentNode;
     document.querySelector('#titleModal').innerHTML ="Actualizar Categoría";

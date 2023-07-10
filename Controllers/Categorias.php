@@ -111,15 +111,13 @@
 			}
 			die();
 		}
-/* 
+
 		public function getCategoria($idcategoria){
 			if($_SESSION['permisosMod']['r']){
 				$intIdcategoria = intval($idcategoria);
-				if($intIdcategoria > 0)
-				{
+				if($intIdcategoria > 0){
 					$arrData = $this->model->selectCategoria($intIdcategoria);
-					if(empty($arrData))
-					{
+					if(empty($arrData)){
 						$arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
 					}else{
 						$arrData['url_portada'] = media().'/images/uploads/'.$arrData['portada'];
@@ -130,7 +128,7 @@
 			}
 			die();
 		}
-
+/* 
 		public function delCategoria(){
 			if($_POST){
 				if($_SESSION['permisosMod']['d']){
