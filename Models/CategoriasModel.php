@@ -1,20 +1,16 @@
 <?php 
-
-	class CategoriasModel extends Mysql
-	{
+	class CategoriasModel extends Mysql{
 		public $intIdcategoria;
 		public $strCategoria;
 		public $strDescripcion;
 		public $intStatus;
 		public $strPortada;
 
-		public function __construct()
-		{
+		public function __construct(){
 			parent::__construct();
 		}
 
-		public function inserCategoria(string $nombre, string $descripcion, string $portada, int $status){
-
+		public function insertCategoria(string $nombre, string $descripcion, string $portada, int $status){
 			$return = 0;
 			$this->strCategoria = $nombre;
 			$this->strDescripcion = $descripcion;
@@ -24,29 +20,27 @@
 			$sql = "SELECT * FROM categoria WHERE nombre = '{$this->strCategoria}' ";
 			$request = $this->select_all($sql);
 
-			if(empty($request))
-			{
+			if(empty($request)){
 				$query_insert  = "INSERT INTO categoria(nombre,descripcion,portada,status) VALUES(?,?,?,?)";
-	        	$arrData = array($this->strCategoria, 
-								 $this->strDescripcion, 
-								 $this->strPortada, 
-								 $this->intStatus);
-	        	$request_insert = $this->insert($query_insert,$arrData);
-	        	$return = $request_insert;
+				$arrData = array($this->strCategoria, 
+												$this->strDescripcion, 
+												$this->strPortada, 
+												$this->intStatus);
+				$request_insert = $this->insert($query_insert,$arrData);
+				$return = $request_insert;
 			}else{
 				$return = "exist";
 			}
 			return $return;
 		}
 
-		public function selectCategorias()
-		{
+		public function selectCategorias(){
 			$sql = "SELECT * FROM categoria 
-					WHERE status != 0 ";
+							WHERE status != 0 ";
 			$request = $this->select_all($sql);
 			return $request;
 		}
-
+/* 
 		public function selectCategoria(int $idcategoria){
 			$this->intIdcategoria = $idcategoria;
 			$sql = "SELECT * FROM categoria
@@ -65,27 +59,24 @@
 			$sql = "SELECT * FROM categoria WHERE nombre = '{$this->strCategoria}' AND idcategoria != $this->intIdcategoria";
 			$request = $this->select_all($sql);
 
-			if(empty($request))
-			{
+			if(empty($request)){
 				$sql = "UPDATE categoria SET nombre = ?, descripcion = ?, portada = ?, status = ? WHERE idcategoria = $this->intIdcategoria ";
 				$arrData = array($this->strCategoria, 
-								 $this->strDescripcion, 
-								 $this->strPortada, 
-								 $this->intStatus);
+													$this->strDescripcion, 
+													$this->strPortada, 
+													$this->intStatus);
 				$request = $this->update($sql,$arrData);
 			}else{
 				$request = "exist";
 			}
-		    return $request;			
+			return $request;			
 		}
 
-		public function deleteCategoria(int $idcategoria)
-		{
+		public function deleteCategoria(int $idcategoria){
 			$this->intIdcategoria = $idcategoria;
 			$sql = "SELECT * FROM producto WHERE categoriaid = $this->intIdcategoria";
 			$request = $this->select_all($sql);
-			if(empty($request))
-			{
+			if(empty($request)){
 				$sql = "UPDATE categoria SET status = ? WHERE idcategoria = $this->intIdcategoria ";
 				$arrData = array(0);
 				$request = $this->update($sql,$arrData);
@@ -99,8 +90,6 @@
 				$request = 'exist';
 			}
 			return $request;
-		}	
-
-
+		}	 */
 	}
- ?>
+?>

@@ -1,8 +1,8 @@
 let tableCategorias;
-let rowTable = "";
+// let rowTable = "";
 let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
-/* 
+
     tableCategorias = $('#tableCategorias').dataTable( {
         "aProcessing":true,
         "aServerSide":true,
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function(){
         "bDestroy": true,
         "iDisplayLength": 10,
         "order":[[0,"desc"]]  
-    }); */
+    });
 
 
 	if(document.querySelector("#foto")){
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     formCategoria.reset();
                     swal("Categoria", objData.msg ,"success");
                     //tableCategorias.api().ajax.reload();
-                    //removePhoto();
+                    removePhoto();
                 }else{
                     swal("Error", objData.msg , "error");
                 }              
@@ -258,7 +258,7 @@ function fntDelInfo(idcategoria){
 }
 */
 function removePhoto(){
-    document.querySelector('#foto').value ="";
+    document.querySelector('#foto').value = "";
     document.querySelector('.delPhoto').classList.add("notBlock");
     if(document.querySelector('#img')){
         document.querySelector('#img').remove();
