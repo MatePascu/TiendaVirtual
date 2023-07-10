@@ -1,8 +1,8 @@
-/* let tableCategorias;
+let tableCategorias;
 let rowTable = "";
 let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
-
+/* 
     tableCategorias = $('#tableCategorias').dataTable( {
         "aProcessing":true,
         "aServerSide":true,
@@ -48,19 +48,19 @@ document.addEventListener('DOMContentLoaded', function(){
         "bDestroy": true,
         "iDisplayLength": 10,
         "order":[[0,"desc"]]  
-    });
+    }); */
 
 
 	if(document.querySelector("#foto")){
 	    let foto = document.querySelector("#foto");
-	    foto.onchange = function(e) {
+	    foto.onchange = function(e) { // El evento se ejecuta cuando cambia de valor el input seleccionado
 	        let uploadFoto = document.querySelector("#foto").value;
 	        let fileimg = document.querySelector("#foto").files;
 	        let nav = window.URL || window.webkitURL;
 	        let contactAlert = document.querySelector('#form_alert');
 	        if(uploadFoto !=''){
-	            let type = fileimg[0].type;
-	            let name = fileimg[0].name;
+	            let type = fileimg[0].type; //Tipo de archivo cargado
+	            let name = fileimg[0].name;//Nombre del archivo cargado
 	            if(type != 'image/jpeg' && type != 'image/jpg' && type != 'image/png'){
 	                contactAlert.innerHTML = '<p class="errorArchivo">El archivo no es válido.</p>';
 	                if(document.querySelector('#img')){
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	if(document.querySelector(".delPhoto")){
 	    let delPhoto = document.querySelector(".delPhoto");
 	    delPhoto.onclick = function(e) {
-            document.querySelector("#foto_remove").value= 1;
+            //document.querySelector("#foto_remove").value = 1;
 	        removePhoto();
 	    }
 	}
@@ -99,11 +99,11 @@ document.addEventListener('DOMContentLoaded', function(){
     let formCategoria = document.querySelector("#formCategoria");
     formCategoria.onsubmit = function(e) {
         e.preventDefault();
+        let intIdCategoria = document.querySelector('#idCategoria').value;
         let strNombre = document.querySelector('#txtNombre').value;
         let strDescripcion = document.querySelector('#txtDescripcion').value;
         let intStatus = document.querySelector('#listStatus').value;        
-        if(strNombre == '' || strDescripcion == '' || intStatus == '')
-        {
+        if(strNombre == '' || strDescripcion == '' || intStatus == ''){
             swal("Atención", "Todos los campos son obligatorios." , "error");
             return false;
         }
@@ -114,12 +114,10 @@ document.addEventListener('DOMContentLoaded', function(){
         request.open("POST",ajaxUrl,true);
         request.send(formData);
         request.onreadystatechange = function(){
-           if(request.readyState == 4 && request.status == 200){
-                
+            if(request.readyState == 4 && request.status == 200){
                 let objData = JSON.parse(request.responseText);
-                if(objData.status)
-                {
-                    if(rowTable == ""){
+                if(objData.status){
+                    /* if(rowTable == ""){
                         tableCategorias.api().ajax.reload();
                     }else{
                         htmlStatus = intStatus == 1 ? 
@@ -129,12 +127,13 @@ document.addEventListener('DOMContentLoaded', function(){
                         rowTable.cells[2].textContent = strDescripcion;
                         rowTable.cells[3].innerHTML = htmlStatus;
                         rowTable = "";
-                    }
+                    } */
 
                     $('#modalFormCategorias').modal("hide");
                     formCategoria.reset();
                     swal("Categoria", objData.msg ,"success");
-                    removePhoto();
+                    //tableCategorias.api().ajax.reload();
+                    //removePhoto();
                 }else{
                     swal("Error", objData.msg , "error");
                 }              
@@ -143,9 +142,8 @@ document.addEventListener('DOMContentLoaded', function(){
             return false;
         }
     }
-
 }, false);
-
+/* 
 function fntViewInfo(idcategoria){
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     let ajaxUrl = base_url+'/Categorias/getCategoria/'+idcategoria;
@@ -258,7 +256,7 @@ function fntDelInfo(idcategoria){
     });
 
 }
-
+*/
 function removePhoto(){
     document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
@@ -266,7 +264,7 @@ function removePhoto(){
         document.querySelector('#img').remove();
     }
 }
-*/
+
 function openModal(){
     rowTable = "";
     document.querySelector('#idCategoria').value ="";

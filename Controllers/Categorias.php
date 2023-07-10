@@ -20,9 +20,12 @@
 			$data['page_functions_js'] = "functions_categorias.js";
 			$this->views->getView($this,"categorias",$data);
 		}
-/* 
+
 		public function setCategoria(){
-			if($_POST){
+			dep($_POST);
+			dep($_FILES);
+			exit();
+			/* if($_POST){
 				if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
 					$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
 				}else{
@@ -80,10 +83,10 @@
 					}
 				}
 				echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
-			}
-			die();
+			} 
+			die();*/
 		}
-
+/* 
 		public function getCategorias(){
 			if($_SESSION['permisosMod']['r']){
 				$arrData = $this->model->selectCategorias();
