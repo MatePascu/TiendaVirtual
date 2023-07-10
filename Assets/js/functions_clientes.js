@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function(){
           return false;
         } 
       } 
-      //divLoading.style.display = "flex";
+      divLoading.style.display = "flex";
       let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
       let ajaxUrl = base_url+'/Clientes/setCliente'; 
       let formData = new FormData(formCliente);
@@ -99,12 +99,13 @@ document.addEventListener('DOMContentLoaded', function(){
             } */
             $('#modalFormCliente').modal("hide");
             formCliente.reset();
+            tableClientes.api().ajax.reload();
             swal("Usuarios", objData.msg ,"success");
           }else{
             swal("Error", objData.msg , "error");
           }
         }
-        //divLoading.style.display = "none";
+        divLoading.style.display = "none";
         return false;
       }
     }
