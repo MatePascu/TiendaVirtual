@@ -82,6 +82,9 @@
         $move = move_uploaded_file($url_temp, $destino); //Esta funcion muevo el archivo cargado (primer parametro (ruta)) a donde se indique (segundo parametro(ruta))
         return $move;
     }
+    function deleteFile(string $name){
+        unlink('Assets/images/uploads/'.$name);
+    }
     //Elimina exceso de espacios entre palabras
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);

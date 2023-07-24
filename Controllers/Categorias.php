@@ -35,7 +35,7 @@
 					$type = $foto['type'];
 					$url_temp = $foto['tmp_name'];
 					$imgPortada 	= 'portada_categoria.png';
-					// $request_cateria = "";
+					$request_cateria = "";
 					if($nombre_foto != ''){ 
 						$imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg'; //md5 encripta la fecha
 					}
@@ -49,11 +49,11 @@
 					}else{
 						//Actualizar
 						if($_SESSION['permisosMod']['u']){
-							/* if($nombre_foto == ''){
+							if($nombre_foto == ''){
 								if($_POST['foto_actual'] != 'portada_categoria.png' && $_POST['foto_remove'] == 0 ){
 									$imgPortada = $_POST['foto_actual'];
 								}
-							} */
+							}
 							$request_cateria = $this->model->updateCategoria($intIdcategoria,$strCategoria, $strDescipcion,$imgPortada,$intStatus);
 							$option = 2;
 						}
@@ -64,12 +64,12 @@
 							if($nombre_foto != ''){ uploadImage($foto, $imgPortada); } //Funcion en el helpers
 						}else{
 							$arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
-							/* if($nombre_foto != ''){ uploadImage($foto,$imgPortada); }
+							if($nombre_foto != ''){ uploadImage($foto,$imgPortada); } //Si se cargo una imagen la guarda
 
 							if(($nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png')
 								|| ($nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria.png')){
-								deleteFile($_POST['foto_actual']);
-							} */
+								deleteFile($_POST['foto_actual']); //Funcion en helpers
+							}
 						}
 					}else if($request_cateria == 'exist'){
 						$arrResponse = array('status' => false, 'msg' => '¡Atención! La categoría ya existe.');
@@ -128,7 +128,7 @@
 			}
 			die();
 		}
-/* 
+
 		public function delCategoria(){
 			if($_POST){
 				if($_SESSION['permisosMod']['d']){
@@ -147,7 +147,7 @@
 			}
 			die();
 		}
-
+/* 
 		public function getSelectCategorias(){
 			$htmlOptions = "";
 			$arrData = $this->model->selectCategorias();

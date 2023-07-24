@@ -48,7 +48,7 @@
 			$request = $this->select($sql);
 			return $request;
 		}
-/* 
+
 		public function updateCategoria(int $idcategoria, string $categoria, string $descripcion, string $portada, int $status){
 			$this->intIdcategoria = $idcategoria;
 			$this->strCategoria = $categoria;
@@ -74,14 +74,13 @@
 
 		public function deleteCategoria(int $idcategoria){
 			$this->intIdcategoria = $idcategoria;
-			$sql = "SELECT * FROM producto WHERE categoriaid = $this->intIdcategoria";
+			$sql = "SELECT * FROM producto WHERE categoriaid = $this->intIdcategoria"; //Verifica si hay productos asociados a la categoria (Si los hay no se puede borrar)
 			$request = $this->select_all($sql);
 			if(empty($request)){
 				$sql = "UPDATE categoria SET status = ? WHERE idcategoria = $this->intIdcategoria ";
 				$arrData = array(0);
 				$request = $this->update($sql,$arrData);
-				if($request)
-				{
+				if($request){
 					$request = 'ok';	
 				}else{
 					$request = 'error';
@@ -90,6 +89,6 @@
 				$request = 'exist';
 			}
 			return $request;
-		}	 */
+		}	
 	}
 ?>

@@ -7,42 +7,42 @@ document.addEventListener('DOMContentLoaded', function(){
         "aProcessing":true,
         "aServerSide":true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
         "ajax":{
-            "url": " "+base_url+"/Categorias/getCategorias",
-            "dataSrc":""
+        "url": " "+base_url+"/Categorias/getCategorias",
+        "dataSrc":""
         },
         "columns":[
-            {"data":"idcategoria"},
-            {"data":"nombre"},
-            {"data":"descripcion"},
-            {"data":"status"},
-            {"data":"options"}
+        {"data":"idcategoria"},
+        {"data":"nombre"},
+        {"data":"descripcion"},
+        {"data":"status"},
+        {"data":"options"}
         ],
         'dom': 'lBfrtip',
         'buttons': [
-            {
-                "extend": "copyHtml5",
-                "text": "<i class='far fa-copy'></i> Copiar",
-                "titleAttr":"Copiar",
-                "className": "btn btn-secondary"
-            },{
-                "extend": "excelHtml5",
-                "text": "<i class='fas fa-file-excel'></i> Excel",
-                "titleAttr":"Esportar a Excel",
-                "className": "btn btn-success"
-            },{
-                "extend": "pdfHtml5",
-                "text": "<i class='fas fa-file-pdf'></i> PDF",
-                "titleAttr":"Esportar a PDF",
-                "className": "btn btn-danger"
-            },{
-                "extend": "csvHtml5",
-                "text": "<i class='fas fa-file-csv'></i> CSV",
-                "titleAttr":"Esportar a CSV",
-                "className": "btn btn-info"
-            }
+        {
+            "extend": "copyHtml5",
+            "text": "<i class='far fa-copy'></i> Copiar",
+            "titleAttr":"Copiar",
+            "className": "btn btn-secondary"
+        },{
+            "extend": "excelHtml5",
+            "text": "<i class='fas fa-file-excel'></i> Excel",
+            "titleAttr":"Esportar a Excel",
+            "className": "btn btn-success"
+        },{
+            "extend": "pdfHtml5",
+            "text": "<i class='fas fa-file-pdf'></i> PDF",
+            "titleAttr":"Esportar a PDF",
+            "className": "btn btn-danger"
+        },{
+            "extend": "csvHtml5",
+            "text": "<i class='fas fa-file-csv'></i> CSV",
+            "titleAttr":"Esportar a CSV",
+            "className": "btn btn-info"
+        }
         ],
         "resonsieve":"true",
         "bDestroy": true,
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	if(document.querySelector(".delPhoto")){
 	    let delPhoto = document.querySelector(".delPhoto");
 	    delPhoto.onclick = function(e) {
-            //document.querySelector("#foto_remove").value = 1;
+            document.querySelector("#foto_remove").value = 1;
 	        removePhoto();
 	    }
 	}
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function(){
     let formCategoria = document.querySelector("#formCategoria");
     formCategoria.onsubmit = function(e) {
         e.preventDefault();
-        let intIdCategoria = document.querySelector('#idCategoria').value;
         let strNombre = document.querySelector('#txtNombre').value;
         let strDescripcion = document.querySelector('#txtDescripcion').value;
         let intStatus = document.querySelector('#listStatus').value;        
@@ -132,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     $('#modalFormCategorias').modal("hide");
                     formCategoria.reset();
                     swal("Categoria", objData.msg ,"success");
-                    //tableCategorias.api().ajax.reload();
+                    tableCategorias.api().ajax.reload();
                     removePhoto();
                 }else{
                     swal("Error", objData.msg , "error");
@@ -168,7 +167,7 @@ function fntViewInfo(idcategoria){
         }
     }
 }
-/* 
+
 function fntEditInfo(element,idcategoria){
     rowTable = element.parentNode.parentNode.parentNode;
     document.querySelector('#titleModal').innerHTML ="Actualizar Categoría";
@@ -182,28 +181,27 @@ function fntEditInfo(element,idcategoria){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status)
-            {
+            if(objData.status){
                 document.querySelector("#idCategoria").value = objData.data.idcategoria;
                 document.querySelector("#txtNombre").value = objData.data.nombre;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
                 document.querySelector('#foto_actual').value = objData.data.portada;
                 document.querySelector("#foto_remove").value= 0;
 
-                if(objData.data.status == 1){
+                if(objData.data.status == 1){ //Selecciona el estado (Activo / Inactivo)
                     document.querySelector("#listStatus").value = 1;
                 }else{
                     document.querySelector("#listStatus").value = 2;
                 }
                 $('#listStatus').selectpicker('render');
 
-                if(document.querySelector('#img')){
+                if(document.querySelector('#img')){ //Si existe la imagen carga la ruta de la img en el src
                     document.querySelector('#img').src = objData.data.url_portada;
-                }else{
+                }else{                             //Si no existe crea un elemto con la imagen por defecto
                     document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src="+objData.data.url_portada+">";
                 }
 
-                if(objData.data.portada == 'portada_categoria.png'){
+                if(objData.data.portada == 'portada_categoria.png'){ //Muestra la X para eliminar la imagen cargada si existe
                     document.querySelector('.delPhoto').classList.add("notBlock");
                 }else{
                     document.querySelector('.delPhoto').classList.remove("notBlock");
@@ -230,8 +228,7 @@ function fntDelInfo(idcategoria){
         closeOnCancel: true
     }, function(isConfirm) {
         
-        if (isConfirm) 
-        {
+        if (isConfirm) {
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = base_url+'/Categorias/delCategoria';
             let strData = "idCategoria="+idcategoria;
@@ -251,11 +248,9 @@ function fntDelInfo(idcategoria){
                 }
             }
         }
-
     });
-
 }
-*/
+
 function removePhoto(){
     document.querySelector('#foto').value = "";
     document.querySelector('.delPhoto').classList.add("notBlock");
@@ -273,5 +268,5 @@ function openModal(){
     document.querySelector('#titleModal').innerHTML = "Nueva Categoría";
     document.querySelector("#formCategoria").reset();
     $('#modalFormCategorias').modal('show');
-    //removePhoto();
+    removePhoto();
 } 
