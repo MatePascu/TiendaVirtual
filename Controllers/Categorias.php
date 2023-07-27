@@ -147,7 +147,7 @@
 			}
 			die();
 		}
-/* 
+
 		public function getSelectCategorias(){
 			$htmlOptions = "";
 			$arrData = $this->model->selectCategorias();
@@ -160,6 +160,6 @@
 			}
 			echo $htmlOptions;
 			die();	
-		} */
+		}
 	}
 ?>
