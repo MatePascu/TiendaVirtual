@@ -25,4 +25,7 @@
 	const EMAIL_REMITENTE = "matepascucci2000@gmail.com";
 	const NOMBRE_EMPRESA = "Tienda Virtual";
 	const WEB_EMPRESA = "https://portfolio-mp.netlify.app";
+
+	const CAT_SLIDER = "1,2,3";
+	const CAT_BANNER = "1,2,3";
 ?>

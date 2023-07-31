@@ -85,13 +85,13 @@
 						$option = 2;
 						if($_SESSION['permisosMod']['u']){
 							$request_producto = $this->model->updateProducto($idProducto,
-																		$strNombre,
-																		$strDescripcion, 
-																		$strCodigo, 
-																		$intCategoriaId,
-																		$strPrecio, 
-																		$intStock, 
-																		$intStatus);
+																	$strNombre,
+																	$strDescripcion, 
+																	$strCodigo, 
+																	$intCategoriaId,
+																	$strPrecio, 
+																	$intStock, 
+																	$intStatus);
 						}
 					}
 					if($request_producto > 0 ){
