@@ -1,6 +1,6 @@
 <?php 
 
-	//define("BASE_URL", "http://localhost/tienda_virtual/"); Ota manera de definir variable
+	//define("BASE_URL", "http://localhost/tienda_virtual/"); Otra manera de definir variable
 	const BASE_URL = "http://localhost/tienda_virtual";
 
 	//Zona horaria
@@ -26,6 +26,6 @@
 	const NOMBRE_EMPRESA = "Tienda Virtual";
 	const WEB_EMPRESA = "https://portfolio-mp.netlify.app";
 
-	const CAT_SLIDER = "1,2,3";
-	const CAT_BANNER = "1,2,3";
+	const CAT_SLIDER = "1,2,3"; // Categorias a mostrar en slider principal
+	const CAT_BANNER = "1,2,3"; // Categorias a mostrar en banner secundario
 ?>

@@ -30,6 +30,10 @@
 					$strCategoria = strClean($_POST['txtNombre']);
 					$strDescipcion = strClean($_POST['txtDescripcion']);
 					$intStatus = intval($_POST['listStatus']);
+
+					$ruta = strtolower(clear_cadena($strCategoria));
+					$ruta = str_replace(" ","-",$ruta);
+
 					$foto = $_FILES['foto']; //Con $_FILES se obtienen los archivos que se mandan desde functions.js
 					$nombre_foto 	= $foto['name'];
 					$type = $foto['type'];
@@ -43,7 +47,7 @@
 					if($intIdcategoria == 0){
 						//Crear
 						if($_SESSION['permisosMod']['w']){
-							$request_cateria = $this->model->insertCategoria($strCategoria, $strDescipcion, $imgPortada, $intStatus);
+							$request_cateria = $this->model->insertCategoria($strCategoria, $strDescipcion, $imgPortada, $ruta, $intStatus);
 							$option = 1;
 						}
 					}else{
@@ -54,7 +58,7 @@
 									$imgPortada = $_POST['foto_actual'];
 								}
 							}
-							$request_cateria = $this->model->updateCategoria($intIdcategoria,$strCategoria, $strDescipcion,$imgPortada,$intStatus);
+							$request_cateria = $this->model->updateCategoria($intIdcategoria,$strCategoria, $strDescipcion, $imgPortada, $ruta, $intStatus);
 							$option = 2;
 						}
 					}
