@@ -1,16 +1,21 @@
 <?php 
 
 class Clientes extends Controllers{
-  public function __construct(){
+	public function __construct()
+	{
 		parent::__construct();
-    session_start();
-		if(empty($_SESSION['login'])){
+		session_start();
+		session_regenerate_id(true);
+		if(empty($_SESSION['login']))
+		{
 			header('Location: '.base_url().'/login');
+			die();
 		}
 		getPermisos(3);
 	}
 
-	public function Clientes(){
+	public function Clientes()
+	{
 		if(empty($_SESSION['permisosMod']['r'])){
 			header("Location:".base_url().'/dashboard');
 		}
@@ -22,9 +27,10 @@ class Clientes extends Controllers{
 	}
 
 	public function setCliente(){
-		//error_reporting(0);
+		error_reporting(0);
 		if($_POST){
-			if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['txtNit']) || empty($_POST['txtNombreFiscal']) || empty($_POST['txtDirFiscal']) ){
+			if(empty($_POST['txtIdentificacion']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmail']) || empty($_POST['txtNit']) || empty($_POST['txtNombreFiscal']) || empty($_POST['txtDirFiscal']) )
+			{
 				$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
 			}else{ 
 				$idUsuario = intval($_POST['idUsuario']);
@@ -36,50 +42,52 @@ class Clientes extends Controllers{
 				$strNit = strClean($_POST['txtNit']);
 				$strNomFiscal = strClean($_POST['txtNombreFiscal']);
 				$strDirFiscal = strClean($_POST['txtDirFiscal']);
-				$intTipoId = 15; // 15 porque es el id para los clientes
-				//$request_user = "";
-				if($idUsuario == 0){
+				$intTipoId = 7;
+				$request_user = "";
+				if($idUsuario == 0)
+				{
 					$option = 1;
 					$strPassword =  empty($_POST['txtPassword']) ? passGenerator() : $_POST['txtPassword'];
 					$strPasswordEncript = hash("SHA256",$strPassword);
 					if($_SESSION['permisosMod']['w']){
 						$request_user = $this->model->insertCliente($strIdentificacion,
-																												$strNombre, 
-																												$strApellido, 
-																												$intTelefono, 
-																												$strEmail,
-																												$strPasswordEncript,
-																												$intTipoId, 
-																												$strNit,
-																												$strNomFiscal,
-																												$strDirFiscal );
+																			$strNombre, 
+																			$strApellido, 
+																			$intTelefono, 
+																			$strEmail,
+																			$strPasswordEncript,
+																			$intTipoId, 
+																			$strNit,
+																			$strNomFiscal,
+																			$strDirFiscal );
 					}
 				}else{
 					$option = 2;
 					$strPassword =  empty($_POST['txtPassword']) ? "" : hash("SHA256",$_POST['txtPassword']);
 					if($_SESSION['permisosMod']['u']){
 						$request_user = $this->model->updateCliente($idUsuario,
-																												$strIdentificacion, 
-																												$strNombre,
-																												$strApellido, 
-																												$intTelefono, 
-																												$strEmail,
-																												$strPassword, 
-																												$strNit,
-																												$strNomFiscal, 
-																												$strDirFiscal);
+																	$strIdentificacion, 
+																	$strNombre,
+																	$strApellido, 
+																	$intTelefono, 
+																	$strEmail,
+																	$strPassword, 
+																	$strNit,
+																	$strNomFiscal, 
+																	$strDirFiscal);
 					}
 				}
 
-				if($request_user > 0 ){
+				if($request_user > 0 )
+				{
 					if($option == 1){
 						$arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-						/* $nombreUsuario = $strNombre.' '.$strApellido;
+						$nombreUsuario = $strNombre.' '.$strApellido;
 						$dataUsuario = array('nombreUsuario' => $nombreUsuario,
-																	'email' => $strEmail,
-																	'password' => $strPassword,
-																	'asunto' => 'Bienvenido a tu tienda en línea');
-						sendEmail($dataUsuario,'email_bienvenida'); */
+											 'email' => $strEmail,
+											 'password' => $strPassword,
+											 'asunto' => 'Bienvenido a tu tienda en línea');
+						sendEmail($dataUsuario,'email_bienvenida');
 					}else{
 						$arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
 					}
@@ -94,7 +102,8 @@ class Clientes extends Controllers{
 		die();
 	}
 
-	public function getClientes(){
+	public function getClientes()
+	{
 		if($_SESSION['permisosMod']['r']){
 			$arrData = $this->model->selectClientes();
 			for ($i=0; $i < count($arrData); $i++) {
@@ -120,9 +129,11 @@ class Clientes extends Controllers{
 	public function getCliente($idpersona){
 		if($_SESSION['permisosMod']['r']){
 			$idusuario = intval($idpersona);
-			if($idusuario > 0){
+			if($idusuario > 0)
+			{
 				$arrData = $this->model->selectCliente($idusuario);
-				if(empty($arrData)){
+				if(empty($arrData))
+				{
 					$arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
 				}else{
 					$arrResponse = array('status' => true, 'data' => $arrData);
@@ -133,12 +144,14 @@ class Clientes extends Controllers{
 		die();
 	}
 
-	public function delCliente(){
+	public function delCliente()
+	{
 		if($_POST){
 			if($_SESSION['permisosMod']['d']){
 				$intIdpersona = intval($_POST['idUsuario']);
 				$requestDelete = $this->model->deleteCliente($intIdpersona);
-				if($requestDelete){
+				if($requestDelete)
+				{
 					$arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el cliente');
 				}else{
 					$arrResponse = array('status' => false, 'msg' => 'Error al eliminar al cliente.');
@@ -148,5 +161,9 @@ class Clientes extends Controllers{
 		}
 		die();
 	}
+
+
+
 }
+
 ?>

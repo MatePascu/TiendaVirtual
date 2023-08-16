@@ -1,49 +1,68 @@
 <?php 
-    //Retorla la url del proyecto
-    function base_url(){
-        return BASE_URL;
-    }
+
+	//Retorla la url del proyecto
+	function base_url()
+	{
+		return BASE_URL;
+	}
     //Retorla la url de Assets
-    function media(){
+    function media()
+    {
         return BASE_URL."/Assets";
     }
-    function headerAdmin($data=""){
+    function headerAdmin($data="")
+    {
         $view_header = "Views/Template/header_admin.php";
         require_once ($view_header);
     }
-    function footerAdmin($data=""){
+    function footerAdmin($data="")
+    {
         $view_footer = "Views/Template/footer_admin.php";
         require_once ($view_footer);        
     }
-    function headerTienda($data=""){
+    function headerTienda($data="")
+    {
         $view_header = "Views/Template/header_tienda.php";
         require_once ($view_header);
     }
-    function footerTienda($data=""){
+    function footerTienda($data="")
+    {
         $view_footer = "Views/Template/footer_tienda.php";
         require_once ($view_footer);        
     }
-    //Muestra información formateada
-    function dep($data){
+	//Muestra información formateada
+	function dep($data)
+    {
         $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
         return $format;
     }
-    function getModal(string $nameModal, $data){
+    function getModal(string $nameModal, $data)
+    {
         $view_modal = "Views/Template/Modals/{$nameModal}.php";
         require_once $view_modal;        
-    }  
-    //Envio de correo
-    function sendEmail($data, $template){
+    }
+    function getFile(string $url, $data)
+    {
+        ob_start();
+        require_once("Views/{$url}.php");
+        $file = ob_get_clean();
+        return $file;        
+    }
+    //Envio de correos
+    function sendEmail($data,$template)
+    {
         $asunto = $data['asunto'];
         $emailDestino = $data['email'];
         $empresa = NOMBRE_REMITENTE;
         $remitente = EMAIL_REMITENTE;
-        //Envio de correo
-        $de = "MIME-Version: 1.0\r\n"; //Encabezados
+        $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
+        //ENVIO DE CORREO
+        $de = "MIME-Version: 1.0\r\n";
         $de .= "Content-type: text/html; charset=UTF-8\r\n";
         $de .= "From: {$empresa} <{$remitente}>\r\n";
+        $de .= "Bcc: $emailCopia\r\n";
         ob_start();
         require_once("Views/Template/Email/".$template.".php");
         $mensaje = ob_get_clean();
@@ -52,47 +71,38 @@
     }
 
     function getPermisos(int $idmodulo){
-        require_once("Models/PermisosModel.php");
+        require_once ("Models/PermisosModel.php");
         $objPermisos = new PermisosModel();
         $idrol = $_SESSION['userData']['idrol'];
         $arrPermisos = $objPermisos->permisosModulo($idrol);
         $permisos = '';
         $permisosMod = '';
-        if(count($arrPermisos) > 0){
+        if(count($arrPermisos) > 0 ){
             $permisos = $arrPermisos;
-            $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : ""; //isset verifica si existe
+            $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
         }
         $_SESSION['permisos'] = $permisos;
         $_SESSION['permisosMod'] = $permisosMod;
     }
 
-    function sessionUser(int $idpersona){ //Obtiene los datos del usuario a traves del metodo sessionLogin()
-        require_once('Models/LoginModel.php');
+    function sessionUser(int $idpersona){
+        require_once ("Models/LoginModel.php");
         $objLogin = new LoginModel();
         $request = $objLogin->sessionLogin($idpersona);
         return $request;
     }
-    /* function sessionStart(){
-        session_start();//Inicia las variables de sesion para poder usarlar
-        $inactive = 20;
-        if(isset($_SESSION['timeout'])){ //Comprueba si existe esa variable
-            $session_in = time() - $_SESSION['inicio']; //Resto el tiempo actual con el tiempo al inicio de sesion para saber cuanto tiempo lleva logeado el usuario
-            if($session_in > $inactive){ // Comprueba si el tiempo q lleva logeado es mayor al tiempo maximo
-                header("Location: ".BASE_URL."/logout");
-            }else{
-                header("Location: ".BASE_URL."/logout");
-            }
-        }
-    } */
+
     function uploadImage(array $data, string $name){
         $url_temp = $data['tmp_name'];
-        $destino = 'Assets/images/uploads/'.$name;
-        $move = move_uploaded_file($url_temp, $destino); //Esta funcion muevo el archivo cargado (primer parametro (ruta)) a donde se indique (segundo parametro(ruta))
+        $destino    = 'Assets/images/uploads/'.$name;        
+        $move = move_uploaded_file($url_temp, $destino);
         return $move;
     }
+
     function deleteFile(string $name){
         unlink('Assets/images/uploads/'.$name);
     }
+
     //Elimina exceso de espacios entre palabras
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);
@@ -126,7 +136,7 @@
         $string = str_ireplace("==","",$string);
         return $string;
     }
-    
+
     function clear_cadena(string $cadena){
         //Reemplazamos la A y a
         $cadena = str_replace(
@@ -134,31 +144,31 @@
         array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
         $cadena
         );
-
+ 
         //Reemplazamos la E y e
         $cadena = str_replace(
         array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
         array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
         $cadena );
-
+ 
         //Reemplazamos la I y i
         $cadena = str_replace(
         array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
         array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
         $cadena );
-
+ 
         //Reemplazamos la O y o
         $cadena = str_replace(
         array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
         array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
         $cadena );
-
+ 
         //Reemplazamos la U y u
         $cadena = str_replace(
         array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
         array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
         $cadena );
-
+ 
         //Reemplazamos la N, n, C y c
         $cadena = str_replace(
         array('Ñ', 'ñ', 'Ç', 'ç',',','.',';',':'),
@@ -168,7 +178,8 @@
         return $cadena;
     }
     //Genera una contraseña de 10 caracteres
-    function passGenerator($length = 10){
+	function passGenerator($length = 10)
+    {
         $pass = "";
         $longitudPass=$length;
         $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
@@ -182,7 +193,8 @@
         return $pass;
     }
     //Genera un token
-    function token(){
+    function token()
+    {
         $r1 = bin2hex(random_bytes(10));
         $r2 = bin2hex(random_bytes(10));
         $r3 = bin2hex(random_bytes(10));
@@ -194,5 +206,72 @@
     function formatMoney($cantidad){
         $cantidad = number_format($cantidad,2,SPD,SPM);
         return $cantidad;
+    }
+    
+    function getTokenPaypal(){
+        $payLogin = curl_init(URLPAYPAL."/v1/oauth2/token"); //Indica url a donde conectarse
+        curl_setopt($payLogin, CURLOPT_SSL_VERIFYPEER, FALSE); //Verifica certificado SSL en la coneccion
+        curl_setopt($payLogin, CURLOPT_RETURNTRANSFER,TRUE); //Indica que retorna informacion
+        curl_setopt($payLogin, CURLOPT_USERPWD, IDCLIENTE.":".SECRET); //Datos del cliente
+        curl_setopt($payLogin, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+        $result = curl_exec($payLogin); //Ejecuta
+        $err = curl_error($payLogin);
+        curl_close($payLogin);
+        if($err){
+            $request = "CURL Error #:" . $err;
+        }else{
+            $objData = json_decode($result);
+            $request =  $objData->access_token;
+        }
+        return $request;
+    }
+
+    function CurlConnectionGet(string $ruta, string $contentType = null, string $token){
+        $content_type = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+        if($token != null){
+            $arrHeader = array('Content-Type:'.$content_type,
+                                'Authorization: Bearer '.$token);
+        }else{
+            $arrHeader = array('Content-Type:'.$content_type);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $ruta);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //Indica que va a obtener informacion
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader); //Headers
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err){
+            $request = "CURL Error #:" . $err;
+        }else{
+            $request = json_decode($result);
+        }
+        return $request;
+    }
+
+    function CurlConnectionPost(string $ruta, string $contentType = null, string $token){
+        $content_type = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+        if($token != null){
+            $arrHeader = array('Content-Type:'.$content_type,
+                            'Authorization: Bearer '.$token);
+        }else{
+            $arrHeader = array('Content-Type:'.$content_type);
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $ruta);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err){
+            $request = "CURL Error #:" . $err;
+        }else{
+            $request = json_decode($result);
+        }
+        return $request;
     }
 ?>

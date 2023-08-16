@@ -7,9 +7,10 @@ class Conexion{
 		try{
 			$this->conect = new PDO($connectionString, DB_USER, DB_PASSWORD);
 			$this->conect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		    //echo "conexión exitosa";
 		}catch(PDOException $e){
 			$this->conect = 'Error de conexión';
-			echo "ERROR: " . $e->getMessage();
+		    echo "ERROR: " . $e->getMessage();
 		}
 	}
 

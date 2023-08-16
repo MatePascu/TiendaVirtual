@@ -1,8 +1,7 @@
 <?php 
 headerTienda($data);
-getModal('modalCarrito',$data);
 $arrProductos = $data['productos'];
-?>
+ ?>
 <br><br><br>
 <hr>
 	<!-- Product -->

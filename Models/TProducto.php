@@ -20,26 +20,26 @@ trait TProducto{
 						p.precio,
 						p.ruta,
 						p.stock
-						FROM producto p 
-						INNER JOIN categoria c
-						ON p.categoriaid = c.idcategoria
-						WHERE p.status != 0 ORDER BY p.idproducto DESC ";
-		$request = $this->con->select_all($sql);
-		if(count($request) > 0){
-			for ($c=0; $c < count($request) ; $c++) { 
-				$intIdProducto = $request[$c]['idproducto'];
-				$sqlImg = "SELECT img
-						FROM imagen
-						WHERE productoid = $intIdProducto";
-				$arrImg = $this->con->select_all($sqlImg);
-				if(count($arrImg) > 0){
-					for ($i=0; $i < count($arrImg); $i++) { 
-						$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+				FROM producto p 
+				INNER JOIN categoria c
+				ON p.categoriaid = c.idcategoria
+				WHERE p.status != 0 ORDER BY p.idproducto DESC ";
+				$request = $this->con->select_all($sql);
+				if(count($request) > 0){
+					for ($c=0; $c < count($request) ; $c++) { 
+						$intIdProducto = $request[$c]['idproducto'];
+						$sqlImg = "SELECT img
+								FROM imagen
+								WHERE productoid = $intIdProducto";
+						$arrImg = $this->con->select_all($sqlImg);
+						if(count($arrImg) > 0){
+							for ($i=0; $i < count($arrImg); $i++) { 
+								$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+							}
+						}
+						$request[$c]['images'] = $arrImg;
 					}
 				}
-				$request[$c]['images'] = $arrImg;
-			}
-		}
 		return $request;
 	}
 
@@ -62,29 +62,31 @@ trait TProducto{
 							p.precio,
 							p.ruta,
 							p.stock
-							FROM producto p 
-							INNER JOIN categoria c
-							ON p.categoriaid = c.idcategoria
-							WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria AND c.ruta = '{$this->strRuta}' ";
-			$request = $this->con->select_all($sql);
-			if(count($request) > 0){
-				for ($c=0; $c < count($request) ; $c++) { 
-					$intIdProducto = $request[$c]['idproducto'];
-					$sqlImg = "SELECT img
-										FROM imagen
-										WHERE productoid = $intIdProducto";
-					$arrImg = $this->con->select_all($sqlImg);
-					if(count($arrImg) > 0){
-						for ($i=0; $i < count($arrImg); $i++) { 
-							$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+					FROM producto p 
+					INNER JOIN categoria c
+					ON p.categoriaid = c.idcategoria
+					WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria AND c.ruta = '{$this->strRuta}' ";
+					$request = $this->con->select_all($sql);
+					if(count($request) > 0){
+						for ($c=0; $c < count($request) ; $c++) { 
+							$intIdProducto = $request[$c]['idproducto'];
+							$sqlImg = "SELECT img
+									FROM imagen
+									WHERE productoid = $intIdProducto";
+							$arrImg = $this->con->select_all($sqlImg);
+							if(count($arrImg) > 0){
+								for ($i=0; $i < count($arrImg); $i++) { 
+									$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+								}
+							}
+							$request[$c]['images'] = $arrImg;
 						}
 					}
-					$request[$c]['images'] = $arrImg;
-				}
-			}
 			$request = array('idcategoria' => $this->intIdcategoria,
-											'categoria' => $this->strCategoria,
-											'productos' => $request);
+								'categoria' => $this->strCategoria,
+								'productos' => $request
+							);
+
 		}
 		return $request;
 	}
@@ -103,26 +105,26 @@ trait TProducto{
 						p.precio,
 						p.ruta,
 						p.stock
-						FROM producto p 
-						INNER JOIN categoria c
-						ON p.categoriaid = c.idcategoria
-						WHERE p.status != 0 AND p.idproducto = '{$this->intIdProducto}' AND p.ruta = '{$this->strRuta}' ";
-		$request = $this->con->select($sql);
-		if(!empty($request)){
-			$intIdProducto = $request['idproducto'];
-			$sqlImg = "SELECT img
-					FROM imagen
-					WHERE productoid = $intIdProducto";
-			$arrImg = $this->con->select_all($sqlImg);
-			if(count($arrImg) > 0){
-				for ($i=0; $i < count($arrImg); $i++) { 
-					$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+				FROM producto p 
+				INNER JOIN categoria c
+				ON p.categoriaid = c.idcategoria
+				WHERE p.status != 0 AND p.idproducto = '{$this->intIdProducto}' AND p.ruta = '{$this->strRuta}' ";
+				$request = $this->con->select($sql);
+				if(!empty($request)){
+					$intIdProducto = $request['idproducto'];
+					$sqlImg = "SELECT img
+							FROM imagen
+							WHERE productoid = $intIdProducto";
+					$arrImg = $this->con->select_all($sqlImg);
+					if(count($arrImg) > 0){
+						for ($i=0; $i < count($arrImg); $i++) { 
+							$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+						}
+					}else{
+						$arrImg[0]['url_image'] = media().'/images/uploads/product.png';
+					}
+					$request['images'] = $arrImg;
 				}
-			}else{
-				$arrImg[0]['url_image'] = media().'/images/uploads/product.png';
-			}
-			$request['images'] = $arrImg;
-		}
 		return $request;
 	}
 
@@ -149,27 +151,27 @@ trait TProducto{
 						p.precio,
 						p.ruta,
 						p.stock
-						FROM producto p 
-						INNER JOIN categoria c
-						ON p.categoriaid = c.idcategoria
-						WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria
-						ORDER BY $this->option LIMIT  $this->cant ";
-		$request = $this->con->select_all($sql);
-		if(count($request) > 0){
-			for ($c=0; $c < count($request) ; $c++) { 
-				$intIdProducto = $request[$c]['idproducto'];
-				$sqlImg = "SELECT img
-						FROM imagen
-						WHERE productoid = $intIdProducto";
-				$arrImg = $this->con->select_all($sqlImg);
-				if(count($arrImg) > 0){
-					for ($i=0; $i < count($arrImg); $i++) { 
-						$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+				FROM producto p 
+				INNER JOIN categoria c
+				ON p.categoriaid = c.idcategoria
+				WHERE p.status != 0 AND p.categoriaid = $this->intIdcategoria
+				ORDER BY $this->option LIMIT  $this->cant ";
+				$request = $this->con->select_all($sql);
+				if(count($request) > 0){
+					for ($c=0; $c < count($request) ; $c++) { 
+						$intIdProducto = $request[$c]['idproducto'];
+						$sqlImg = "SELECT img
+								FROM imagen
+								WHERE productoid = $intIdProducto";
+						$arrImg = $this->con->select_all($sqlImg);
+						if(count($arrImg) > 0){
+							for ($i=0; $i < count($arrImg); $i++) { 
+								$arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+							}
+						}
+						$request[$c]['images'] = $arrImg;
 					}
 				}
-				$request[$c]['images'] = $arrImg;
-			}
-		}
 		return $request;
 	}	
 
@@ -208,4 +210,5 @@ trait TProducto{
 		return $request;
 	}
 }
-?>
+
+ ?>

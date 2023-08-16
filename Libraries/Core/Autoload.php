@@ -4,4 +4,4 @@
 			require_once("Libraries/".'Core/'.$class.".php");
 		}
 	});
-?>
+ ?>

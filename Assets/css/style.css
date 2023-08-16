@@ -60,18 +60,18 @@
 }
 /* style portada categoría */
 .prevPhoto {
-	display: flex;
-	justify-content: space-between;
-	width: 300px;
-	height: 200px;
-	border: 1px solid #CCC;
-	position: relative;
-	cursor: pointer;
-	background: url(../images/uploads/portada_categoria.png);
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center center;
-	margin: auto;
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    height: 200px;
+    border: 1px solid #CCC;
+    position: relative;
+    cursor: pointer;
+    background: url(../images/uploads/portada_categoria.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    margin: auto;
 }
 .prevPhoto label{
 	cursor: pointer;
@@ -175,4 +175,22 @@
 #celFotos img{
 	width: 150px;
 	margin: 10px;
+}
+
+/* TIENDA VIRTUAL */
+.divmetodpago label, #divCondiciones{
+	width: 100%;
+	display: flex;
+}
+.divmetodpago label input, #divCondiciones input{
+	margin-right: 15px;
+}
+#divCondiciones a{
+	margin-left: 5px;
+}
+#divCondiciones  label{
+	margin-bottom: 0;
+}
+.modal{
+	z-index: 9999;
 }

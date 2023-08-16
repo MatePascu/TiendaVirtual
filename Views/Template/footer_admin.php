@@ -1,5 +1,6 @@
     <script>
-      const base_url = "<?= base_url(); ?>";
+        const base_url = "<?= base_url(); ?>";
+        const smony = "<?= SMONEY; ?>";
     </script>
     <!-- Essential javascripts for application to work-->
     <script src="<?= media(); ?>/js/jquery-3.3.1.min.js"></script>
@@ -10,8 +11,8 @@
     <!-- The javascript plugin to display page loading on top-->
     <script src="<?= media(); ?>/js/plugins/pace.min.js"></script>
     <!-- Page specific javascripts-->
-    <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script> <!-- Alertas -->
-    <script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script> <!-- Editor de texto para Textarea -->
+    <script type="text/javascript" src="<?= media(); ?>/js/plugins/sweetalert.min.js"></script>
+    <script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script>
 
     <!-- Data table plugin-->
     <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>

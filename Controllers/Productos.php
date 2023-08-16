@@ -1,17 +1,20 @@
 <?php 
 	class Productos extends Controllers{
-		public function __construct(){
+		public function __construct()
+		{
 			parent::__construct();
 			session_start();
 			session_regenerate_id(true);
-			if(empty($_SESSION['login'])){
+			if(empty($_SESSION['login']))
+			{
 				header('Location: '.base_url().'/login');
 				die();
 			}
 			getPermisos(4);
 		}
 
-		public function Productos(){
+		public function Productos()
+		{
 			if(empty($_SESSION['permisosMod']['r'])){
 				header("Location:".base_url().'/dashboard');
 			}
@@ -22,7 +25,8 @@
 			$this->views->getView($this,"productos",$data);
 		}
 
-		public function getProductos(){
+		public function getProductos()
+		{
 			if($_SESSION['permisosMod']['r']){
 				$arrData = $this->model->selectProductos();
 				for ($i=0; $i < count($arrData); $i++) {
@@ -56,7 +60,8 @@
 
 		public function setProducto(){
 			if($_POST){
-				if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo']) || empty($_POST['listCategoria']) || empty($_POST['txtPrecio']) || empty($_POST['listStatus']) ){
+				if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo']) || empty($_POST['listCategoria']) || empty($_POST['txtPrecio']) || empty($_POST['listStatus']) )
+				{
 					$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
 				}else{
 					
@@ -73,7 +78,8 @@
 					$ruta = strtolower(clear_cadena($strNombre));
 					$ruta = str_replace(" ","-",$ruta);
 
-					if($idProducto == 0){
+					if($idProducto == 0)
+					{
 						$option = 1;
 						if($_SESSION['permisosMod']['w']){
 							$request_producto = $this->model->insertProducto($strNombre, 
@@ -81,25 +87,26 @@
 																		$strCodigo, 
 																		$intCategoriaId,
 																		$strPrecio, 
-																		$intStock,
-																		$ruta, 
+																		$intStock, 
+																		$ruta,
 																		$intStatus );
 						}
 					}else{
 						$option = 2;
 						if($_SESSION['permisosMod']['u']){
 							$request_producto = $this->model->updateProducto($idProducto,
-																	$strNombre,
-																	$strDescripcion, 
-																	$strCodigo, 
-																	$intCategoriaId,
-																	$strPrecio, 
-																	$intStock, 
-																	$ruta,
-																	$intStatus);
+																		$strNombre,
+																		$strDescripcion, 
+																		$strCodigo, 
+																		$intCategoriaId,
+																		$strPrecio, 
+																		$intStock, 
+																		$ruta,
+																		$intStatus);
 						}
 					}
-					if($request_producto > 0 ){
+					if($request_producto > 0 )
+					{
 						if($option == 1){
 							$arrResponse = array('status' => true, 'idproducto' => $request_producto, 'msg' => 'Datos guardados correctamente.');
 						}else{
@@ -146,7 +153,7 @@
 				}else{
 					$idProducto = intval($_POST['idproducto']);
 					$foto      = $_FILES['foto'];
-					$imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg';
+					$imgNombre = 'pro_'.md5(date('d-m-Y H:i:s')).'.jpg';
 					$request_image = $this->model->insertImage($idProducto,$imgNombre);
 					if($request_image){
 						$uploadImage = uploadImage($foto,$imgNombre);
@@ -199,4 +206,5 @@
 			die();
 		}
 	}
-?>
+
+ ?>

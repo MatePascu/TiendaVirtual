@@ -14,44 +14,39 @@
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="txtIdentificacion">Identificación <span class="required">*</span></label>
-                  <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" 
-                    value="<?= $_SESSION['userData']['identificacion']; ?>" required="">
+                  <input type="text" class="form-control" id="txtIdentificacion" name="txtIdentificacion" value="<?= $_SESSION['userData']['identificacion']; ?>" required="">
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="txtNombre">Nombres <span class="required">*</span></label>
-                  <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" 
-                    value="<?= $_SESSION['userData']['nombre']; ?>" required="">
+                  <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" value="<?= $_SESSION['userData']['nombres']; ?>" required="">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="txtApellido">Apellidos <span class="required">*</span></label>
-                  <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" 
-                    value="<?= $_SESSION['userData']['apellido']; ?>" required="">
+                  <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" value="<?= $_SESSION['userData']['apellidos']; ?>" required="">
                 </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="txtTelefono">Teléfono <span class="required">*</span></label>
-                  <input type="number" class="form-control valid validNumber" id="intTelefono" name="intTelefono" 
-                    value="<?= $_SESSION['userData']['telefono']; ?>" required="" onkeypress="return controlTag(event);">
+                  <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" value="<?= $_SESSION['userData']['telefono']; ?>" required="" onkeypress="return controlTag(event);">
                 </div>
                 <div class="form-group col-md-6">
                   <label for="txtEmail">Email</label>
-                  <input type="email" class="form-control valid validEmail" id="txtEmail"
-                    value="<?= $_SESSION['userData']['email_user']; ?>" required="" readonly disable>
+                  <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" value="<?= $_SESSION['userData']['email_user']; ?>" required="" readonly disabled >
                 </div>
               </div>
-              <div class="form-row">
+             <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="txtPassword">Password</label>
-                  <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                  <input type="password" class="form-control" id="txtPassword" name="txtPassword" >
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="txtPassword">Confirmar Password</label>
-                  <input type="password" class="form-control" id="txtPasswordConfirm" name="txtPasswordConfirm">
+                  <label for="txtPasswordConfirm">Confirmar Password</label>
+                  <input type="password" class="form-control" id="txtPasswordConfirm" name="txtPasswordConfirm" >
                 </div>
-              </div>
+             </div>
               <div class="tile-footer">
                 <button id="btnActionForm" class="btn btn-info" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Actualizar</span></button>&nbsp;&nbsp;&nbsp;
                 <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>

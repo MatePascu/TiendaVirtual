@@ -1,5 +1,5 @@
 let tableCategorias;
-// let rowTable = "";
+let rowTable = "";
 let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -7,42 +7,42 @@ document.addEventListener('DOMContentLoaded', function(){
         "aProcessing":true,
         "aServerSide":true,
         "language": {
-        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
         "ajax":{
-        "url": " "+base_url+"/Categorias/getCategorias",
-        "dataSrc":""
+            "url": " "+base_url+"/Categorias/getCategorias",
+            "dataSrc":""
         },
         "columns":[
-        {"data":"idcategoria"},
-        {"data":"nombre"},
-        {"data":"descripcion"},
-        {"data":"status"},
-        {"data":"options"}
+            {"data":"idcategoria"},
+            {"data":"nombre"},
+            {"data":"descripcion"},
+            {"data":"status"},
+            {"data":"options"}
         ],
         'dom': 'lBfrtip',
         'buttons': [
-        {
-            "extend": "copyHtml5",
-            "text": "<i class='far fa-copy'></i> Copiar",
-            "titleAttr":"Copiar",
-            "className": "btn btn-secondary"
-        },{
-            "extend": "excelHtml5",
-            "text": "<i class='fas fa-file-excel'></i> Excel",
-            "titleAttr":"Esportar a Excel",
-            "className": "btn btn-success"
-        },{
-            "extend": "pdfHtml5",
-            "text": "<i class='fas fa-file-pdf'></i> PDF",
-            "titleAttr":"Esportar a PDF",
-            "className": "btn btn-danger"
-        },{
-            "extend": "csvHtml5",
-            "text": "<i class='fas fa-file-csv'></i> CSV",
-            "titleAttr":"Esportar a CSV",
-            "className": "btn btn-info"
-        }
+            {
+                "extend": "copyHtml5",
+                "text": "<i class='far fa-copy'></i> Copiar",
+                "titleAttr":"Copiar",
+                "className": "btn btn-secondary"
+            },{
+                "extend": "excelHtml5",
+                "text": "<i class='fas fa-file-excel'></i> Excel",
+                "titleAttr":"Esportar a Excel",
+                "className": "btn btn-success"
+            },{
+                "extend": "pdfHtml5",
+                "text": "<i class='fas fa-file-pdf'></i> PDF",
+                "titleAttr":"Esportar a PDF",
+                "className": "btn btn-danger"
+            },{
+                "extend": "csvHtml5",
+                "text": "<i class='fas fa-file-csv'></i> CSV",
+                "titleAttr":"Esportar a CSV",
+                "className": "btn btn-info"
+            }
         ],
         "resonsieve":"true",
         "bDestroy": true,
@@ -53,14 +53,14 @@ document.addEventListener('DOMContentLoaded', function(){
 
 	if(document.querySelector("#foto")){
 	    let foto = document.querySelector("#foto");
-	    foto.onchange = function(e) { // El evento se ejecuta cuando cambia de valor el input seleccionado
+	    foto.onchange = function(e) {
 	        let uploadFoto = document.querySelector("#foto").value;
 	        let fileimg = document.querySelector("#foto").files;
 	        let nav = window.URL || window.webkitURL;
 	        let contactAlert = document.querySelector('#form_alert');
 	        if(uploadFoto !=''){
-	            let type = fileimg[0].type; //Tipo de archivo cargado
-	            let name = fileimg[0].name;//Nombre del archivo cargado
+	            let type = fileimg[0].type;
+	            let name = fileimg[0].name;
 	            if(type != 'image/jpeg' && type != 'image/jpg' && type != 'image/png'){
 	                contactAlert.innerHTML = '<p class="errorArchivo">El archivo no es válido.</p>';
 	                if(document.querySelector('#img')){
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function(){
 	if(document.querySelector(".delPhoto")){
 	    let delPhoto = document.querySelector(".delPhoto");
 	    delPhoto.onclick = function(e) {
-            document.querySelector("#foto_remove").value = 1;
+            document.querySelector("#foto_remove").value= 1;
 	        removePhoto();
 	    }
 	}
@@ -102,7 +102,8 @@ document.addEventListener('DOMContentLoaded', function(){
         let strNombre = document.querySelector('#txtNombre').value;
         let strDescripcion = document.querySelector('#txtDescripcion').value;
         let intStatus = document.querySelector('#listStatus').value;        
-        if(strNombre == '' || strDescripcion == '' || intStatus == ''){
+        if(strNombre == '' || strDescripcion == '' || intStatus == '')
+        {
             swal("Atención", "Todos los campos son obligatorios." , "error");
             return false;
         }
@@ -113,10 +114,12 @@ document.addEventListener('DOMContentLoaded', function(){
         request.open("POST",ajaxUrl,true);
         request.send(formData);
         request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
+           if(request.readyState == 4 && request.status == 200){
+                
                 let objData = JSON.parse(request.responseText);
-                if(objData.status){
-                    /* if(rowTable == ""){
+                if(objData.status)
+                {
+                    if(rowTable == ""){
                         tableCategorias.api().ajax.reload();
                     }else{
                         htmlStatus = intStatus == 1 ? 
@@ -126,12 +129,11 @@ document.addEventListener('DOMContentLoaded', function(){
                         rowTable.cells[2].textContent = strDescripcion;
                         rowTable.cells[3].innerHTML = htmlStatus;
                         rowTable = "";
-                    } */
+                    }
 
                     $('#modalFormCategorias').modal("hide");
                     formCategoria.reset();
                     swal("Categoria", objData.msg ,"success");
-                    tableCategorias.api().ajax.reload();
                     removePhoto();
                 }else{
                     swal("Error", objData.msg , "error");
@@ -141,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function(){
             return false;
         }
     }
+
 }, false);
 
 function fntViewInfo(idcategoria){
@@ -151,7 +154,8 @@ function fntViewInfo(idcategoria){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status){
+            if(objData.status)
+            {
                 let estado = objData.data.status == 1 ? 
                 '<span class="badge badge-success">Activo</span>' : 
                 '<span class="badge badge-danger">Inactivo</span>';
@@ -181,27 +185,28 @@ function fntEditInfo(element,idcategoria){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
-            if(objData.status){
+            if(objData.status)
+            {
                 document.querySelector("#idCategoria").value = objData.data.idcategoria;
                 document.querySelector("#txtNombre").value = objData.data.nombre;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
                 document.querySelector('#foto_actual').value = objData.data.portada;
                 document.querySelector("#foto_remove").value= 0;
 
-                if(objData.data.status == 1){ //Selecciona el estado (Activo / Inactivo)
+                if(objData.data.status == 1){
                     document.querySelector("#listStatus").value = 1;
                 }else{
                     document.querySelector("#listStatus").value = 2;
                 }
                 $('#listStatus').selectpicker('render');
 
-                if(document.querySelector('#img')){ //Si existe la imagen carga la ruta de la img en el src
+                if(document.querySelector('#img')){
                     document.querySelector('#img').src = objData.data.url_portada;
-                }else{                             //Si no existe crea un elemto con la imagen por defecto
+                }else{
                     document.querySelector('.prevPhoto div').innerHTML = "<img id='img' src="+objData.data.url_portada+">";
                 }
 
-                if(objData.data.portada == 'portada_categoria.png'){ //Muestra la X para eliminar la imagen cargada si existe
+                if(objData.data.portada == 'portada_categoria.png'){
                     document.querySelector('.delPhoto').classList.add("notBlock");
                 }else{
                     document.querySelector('.delPhoto').classList.remove("notBlock");
@@ -228,7 +233,8 @@ function fntDelInfo(idcategoria){
         closeOnCancel: true
     }, function(isConfirm) {
         
-        if (isConfirm) {
+        if (isConfirm) 
+        {
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = base_url+'/Categorias/delCategoria';
             let strData = "idCategoria="+idcategoria;
@@ -248,18 +254,21 @@ function fntDelInfo(idcategoria){
                 }
             }
         }
+
     });
+
 }
 
 function removePhoto(){
-    document.querySelector('#foto').value = "";
+    document.querySelector('#foto').value ="";
     document.querySelector('.delPhoto').classList.add("notBlock");
     if(document.querySelector('#img')){
         document.querySelector('#img').remove();
     }
 }
 
-function openModal(){
+function openModal()
+{
     rowTable = "";
     document.querySelector('#idCategoria').value ="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
@@ -269,4 +278,4 @@ function openModal(){
     document.querySelector("#formCategoria").reset();
     $('#modalFormCategorias').modal('show');
     removePhoto();
-} 
+}

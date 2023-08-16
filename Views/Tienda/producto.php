@@ -1,9 +1,9 @@
 <?php 
 headerTienda($data);
-getModal('modalCarrito',$data);
 $arrProducto = $data['producto'];
 $arrProductos = $data['productos'];
 $arrImages = $arrProducto['images']; 
+$rutacategoria = $arrProducto['categoriaid'].'/'.$arrProducto['ruta_categoria'];
  ?>
 <br><br><br>
 <hr>
@@ -14,7 +14,7 @@ $arrImages = $arrProducto['images'];
 				Inicio
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
-			<a href="<?= base_url().'/tienda/categoria/'.$arrProducto['categoria']; ?>" class="stext-109 cl8 hov-cl1 trans-04">
+			<a href="<?= base_url().'/tienda/categoria/'.$rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
 				<?= $arrProducto['categoria'] ?>
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
@@ -75,14 +75,14 @@ $arrImages = $arrProducto['images'];
 											<i class="fs-16 zmdi zmdi-minus"></i>
 										</div>
 
-										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+										<input id="cant-product" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" min="1">
 
 										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
 											<i class="fs-16 zmdi zmdi-plus"></i>
 										</div>
 									</div>
 
-									<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+									<button id="<?= openssl_encrypt($arrProducto['idproducto'],METHODENCRIPT,KEY); ?>" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
 										Agregar al carrito
 									</button>
 								</div>
@@ -128,6 +128,7 @@ $arrImages = $arrProducto['images'];
 				<?php 
 					if(!empty($arrProductos)){
 						for ($p=0; $p < count($arrProductos); $p++) { 
+							$ruta = $arrProductos[$p]['ruta'];
 							if(count($arrProductos[$p]['images']) > 0 ){
 								$portada = $arrProductos[$p]['images'][0]['url_image'];
 							}else{
@@ -140,14 +141,14 @@ $arrImages = $arrProducto['images'];
 							<div class="block2-pic hov-img0">
 								<img src="<?= $portada ?>" alt="<?= $arrProductos[$p]['nombre'] ?>">
 
-								<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['nombre']; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+								<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 									Ver producto
 								</a>
 							</div>
 
 							<div class="block2-txt flex-w flex-t p-t-14">
 								<div class="block2-txt-child1 flex-col-l ">
-									<a href="product-detail.html" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+									<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 										<?= $arrProductos[$p]['nombre'] ?>
 									</a>
 									<span class="stext-105 cl3">

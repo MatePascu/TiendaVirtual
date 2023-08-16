@@ -1,8 +1,8 @@
-let tableUsuarios
-let rowTable
-let divLoading = document.querySelector("#divLoading")
-
+let tableUsuarios;
+let rowTable = ""; 
+let divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
+
     tableUsuarios = $('#tableUsuarios').dataTable( {
         "aProcessing":true,
         "aServerSide":true,
@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', function(){
         },
         "columns":[
             {"data":"idpersona"},
-            {"data":"nombre"},
-            {"data":"apellido"},
+            {"data":"nombres"},
+            {"data":"apellidos"},
             {"data":"email_user"},
             {"data":"telefono"},
             {"data":"nombrerol"},
@@ -53,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function(){
         "order":[[0,"desc"]]  
     });
 
-    //Crear usuario
     if(document.querySelector("#formUsuario")){
         let formUsuario = document.querySelector("#formUsuario");
         formUsuario.onsubmit = function(e) {
@@ -65,20 +64,21 @@ document.addEventListener('DOMContentLoaded', function(){
             let intTelefono = document.querySelector('#txtTelefono').value;
             let intTipousuario = document.querySelector('#listRolid').value;
             let strPassword = document.querySelector('#txtPassword').value;
-    
-            if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == ''){
+            let intStatus = document.querySelector('#listStatus').value;
+
+            if(strIdentificacion == '' || strApellido == '' || strNombre == '' || strEmail == '' || intTelefono == '' || intTipousuario == '')
+            {
                 swal("Atención", "Todos los campos son obligatorios." , "error");
                 return false;
             }
-    
+
             let elementsValid = document.getElementsByClassName("valid");
             for (let i = 0; i < elementsValid.length; i++) { 
                 if(elementsValid[i].classList.contains('is-invalid')) { 
                     swal("Atención", "Por favor verifique los campos en rojo." , "error");
                     return false;
                 } 
-            } // Valida si algun input del formulario tiene la clase is-invalid para no actualizar los datos
-
+            } 
             divLoading.style.display = "flex";
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = base_url+'/Usuarios/setUsuario'; 
@@ -88,11 +88,25 @@ document.addEventListener('DOMContentLoaded', function(){
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status){
+                    if(objData.status)
+                    {
+                        if(rowTable == ""){
+                            tableUsuarios.api().ajax.reload();
+                        }else{
+                            htmlStatus = intStatus == 1 ? 
+                            '<span class="badge badge-success">Activo</span>' : 
+                            '<span class="badge badge-danger">Inactivo</span>';
+                            rowTable.cells[1].textContent = strNombre;
+                            rowTable.cells[2].textContent = strApellido;
+                            rowTable.cells[3].textContent = strEmail;
+                            rowTable.cells[4].textContent = intTelefono;
+                            rowTable.cells[5].textContent = document.querySelector("#listRolid").selectedOptions[0].text;
+                            rowTable.cells[6].innerHTML = htmlStatus;
+                            rowTable = ""; 
+                        }
                         $('#modalFormUsuario').modal("hide");
                         formUsuario.reset();
                         swal("Usuarios", objData.msg ,"success");
-                        tableUsuarios.api().ajax.reload();
                     }else{
                         swal("Error", objData.msg , "error");
                     }
@@ -102,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
     }
-    //Actualizar perfil
+    //Actualizar Perfil
     if(document.querySelector("#formPerfil")){
         let formPerfil = document.querySelector("#formPerfil");
         formPerfil.onsubmit = function(e) {
@@ -110,23 +124,25 @@ document.addEventListener('DOMContentLoaded', function(){
             let strIdentificacion = document.querySelector('#txtIdentificacion').value;
             let strNombre = document.querySelector('#txtNombre').value;
             let strApellido = document.querySelector('#txtApellido').value;
-            let intTelefono = document.querySelector('#intTelefono').value;
+            let intTelefono = document.querySelector('#txtTelefono').value;
             let strPassword = document.querySelector('#txtPassword').value;
             let strPasswordConfirm = document.querySelector('#txtPasswordConfirm').value;
 
-            if(strIdentificacion == '' || strApellido == '' || strNombre == '' || intTelefono == ''){
+            if(strIdentificacion == '' || strApellido == '' || strNombre == '' || intTelefono == '' )
+            {
                 swal("Atención", "Todos los campos son obligatorios." , "error");
                 return false;
             }
 
-            if(strPassword != '' || strPasswordConfirm != ''){
-                if(strPassword != strPasswordConfirm){
-                    swal('Atención', 'Las contraseñas no son iguales', 'info')
-                    return false
-                }
-                if(strPassword.length < 5){
-                    swal('Atención', 'La contraseña debe tener un minimo de 5 caracteres', 'info')
-                    return false
+            if(strPassword != "" || strPasswordConfirm != "")
+            {   
+                if( strPassword != strPasswordConfirm ){
+                    swal("Atención", "Las contraseñas no son iguales." , "info");
+                    return false;
+                }           
+                if(strPassword.length < 5 ){
+                    swal("Atención", "La contraseña debe tener un mínimo de 5 caracteres." , "info");
+                    return false;
                 }
             }
 
@@ -136,8 +152,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     swal("Atención", "Por favor verifique los campos en rojo." , "error");
                     return false;
                 } 
-            } // Valida si algun input del formulario tiene la clase is-invalid para no actualizar los datos (Validaciones en functions_admin.js)
-
+            } 
             divLoading.style.display = "flex";
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = base_url+'/Usuarios/putPerfil'; 
@@ -145,32 +160,32 @@ document.addEventListener('DOMContentLoaded', function(){
             request.open("POST",ajaxUrl,true);
             request.send(formData);
             request.onreadystatechange = function(){
-                if(request.readyState != 4) return
+                if(request.readyState != 4 ) return; 
                 if(request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status){
+                    if(objData.status)
+                    {
                         $('#modalFormPerfil').modal("hide");
                         swal({
-                            title: '',
+                            title: "",
                             text: objData.msg,
-                            type: 'success',
-                            confirmButtonText: 'Aceptar',
+                            type: "success",
+                            confirmButtonText: "Aceptar",
                             closeOnConfirm: false,
-                        }, function(isConfirm){
-                            if(isConfirm){
-                                location.reload()
+                        }, function(isConfirm) {
+                            if (isConfirm) {
+                                location.reload();
                             }
-                        })
+                        });
+                    }else{
+                        swal("Error", objData.msg , "error");
                     }
-                }else{
-                    swal("Error", objData.msg , "error")
                 }
+                divLoading.style.display = "none";
+                return false;
             }
-            divLoading.style.display = "none"
-            return false
         }
     }
-
     //Actualizar Datos Fiscales
     if(document.querySelector("#formDataFiscal")){
         let formDataFiscal = document.querySelector("#formDataFiscal");
@@ -179,8 +194,9 @@ document.addEventListener('DOMContentLoaded', function(){
             let strNit = document.querySelector('#txtNit').value;
             let strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
             let strDirFiscal = document.querySelector('#txtDirFiscal').value;
-
-            if(strNit == '' || strNombreFiscal == '' || strDirFiscal == '' ){
+           
+            if(strNit == '' || strNombreFiscal == '' || strDirFiscal == '' )
+            {
                 swal("Atención", "Todos los campos son obligatorios." , "error");
                 return false;
             }
@@ -194,7 +210,8 @@ document.addEventListener('DOMContentLoaded', function(){
                 if(request.readyState != 4 ) return; 
                 if(request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status){
+                    if(objData.status)
+                    {
                         $('#modalFormPerfil').modal("hide");
                         swal({
                             title: "",
@@ -220,10 +237,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 window.addEventListener('load', function() {
-    fntRolesUsuario();
-    /*fntViewUsuario();
-    fntEditUsuario();
-    fntDelUsuario();*/
+        fntRolesUsuario();
 }, false);
 
 function fntRolesUsuario(){
@@ -232,11 +246,9 @@ function fntRolesUsuario(){
         let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         request.open("GET",ajaxUrl,true);
         request.send();
-    
         request.onreadystatechange = function(){
             if(request.readyState == 4 && request.status == 200){
                 document.querySelector('#listRolid').innerHTML = request.responseText;
-                //document.querySelector('#listRolid').value = 1;
                 $('#listRolid').selectpicker('render');
             }
         }
@@ -252,14 +264,15 @@ function fntViewUsuario(idpersona){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
 
-            if(objData.status){
-                let estadoUsuario = objData.data.status == 1 ? 
+            if(objData.status)
+            {
+               let estadoUsuario = objData.data.status == 1 ? 
                 '<span class="badge badge-success">Activo</span>' : 
                 '<span class="badge badge-danger">Inactivo</span>';
 
                 document.querySelector("#celIdentificacion").innerHTML = objData.data.identificacion;
-                document.querySelector("#celNombre").innerHTML = objData.data.nombre;
-                document.querySelector("#celApellido").innerHTML = objData.data.apellido;
+                document.querySelector("#celNombre").innerHTML = objData.data.nombres;
+                document.querySelector("#celApellido").innerHTML = objData.data.apellidos;
                 document.querySelector("#celTelefono").innerHTML = objData.data.telefono;
                 document.querySelector("#celEmail").innerHTML = objData.data.email_user;
                 document.querySelector("#celTipoUsuario").innerHTML = objData.data.nombrerol;
@@ -273,14 +286,12 @@ function fntViewUsuario(idpersona){
     }
 }
 
-function fntEditUsuario(element, idpersona){
-    rowTable = element.parentNode.parentNode.parentNode; // parentNode selecciona el elemento padre
-
+function fntEditUsuario(element,idpersona){
+    rowTable = element.parentNode.parentNode.parentNode; 
     document.querySelector('#titleModal').innerHTML ="Actualizar Usuario";
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML ="Actualizar";
-
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     let ajaxUrl = base_url+'/Usuarios/getUsuario/'+idpersona;
     request.open("GET",ajaxUrl,true);
@@ -290,11 +301,12 @@ function fntEditUsuario(element, idpersona){
         if(request.readyState == 4 && request.status == 200){
             let objData = JSON.parse(request.responseText);
 
-            if(objData.status){
+            if(objData.status)
+            {
                 document.querySelector("#idUsuario").value = objData.data.idpersona;
                 document.querySelector("#txtIdentificacion").value = objData.data.identificacion;
-                document.querySelector("#txtNombre").value = objData.data.nombre;
-                document.querySelector("#txtApellido").value = objData.data.apellido;
+                document.querySelector("#txtNombre").value = objData.data.nombres;
+                document.querySelector("#txtApellido").value = objData.data.apellidos;
                 document.querySelector("#txtTelefono").value = objData.data.telefono;
                 document.querySelector("#txtEmail").value = objData.data.email_user;
                 document.querySelector("#listRolid").value =objData.data.idrol;
@@ -314,7 +326,6 @@ function fntEditUsuario(element, idpersona){
 }
 
 function fntDelUsuario(idpersona){
-    let idUsuario = idpersona;
     swal({
         title: "Eliminar Usuario",
         text: "¿Realmente quiere eliminar el Usuario?",
@@ -326,34 +337,36 @@ function fntDelUsuario(idpersona){
         closeOnCancel: true
     }, function(isConfirm) {
         
-        if (isConfirm) {
+        if (isConfirm) 
+        {
             let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             let ajaxUrl = base_url+'/Usuarios/delUsuario';
-            let strData = "idUsuario="+idUsuario;
+            let strData = "idUsuario="+idpersona;
             request.open("POST",ajaxUrl,true);
             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             request.send(strData);
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     let objData = JSON.parse(request.responseText);
-                    if(objData.status){
+                    if(objData.status)
+                    {
                         swal("Eliminar!", objData.msg , "success");
-                        tableUsuarios.api().ajax.reload(function(){
-                            fntRolesUsuario();
-                            /* fntViewUsuario();
-                            fntEditUsuario();
-                            fntDelUsuario(); */
-                        });
+                        tableUsuarios.api().ajax.reload();
                     }else{
                         swal("Atención!", objData.msg , "error");
                     }
                 }
             }
         }
+
     });
+
 }
 
-function openModal(){
+
+function openModal()
+{
+    rowTable = "";
     document.querySelector('#idUsuario').value ="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");

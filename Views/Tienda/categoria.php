@@ -1,8 +1,7 @@
 <?php 
 headerTienda($data);
-getModal('modalCarrito',$data);
 $arrProductos = $data['productos'];
-?>
+ ?>
 <br><br><br>
 <hr>
 	<!-- Product -->
@@ -18,7 +17,7 @@ $arrProductos = $data['productos'];
 						&nbsp;&nbsp;
 						<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
 						<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-							Categoría &nbsp;
+						 Categoría &nbsp;
 					</div>
 				</div>
 
@@ -222,7 +221,7 @@ $arrProductos = $data['productos'];
 					}else{
 						$portada = media().'/images/uploads/product.png';
 					}
-			?>
+			 ?>
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
 					<!-- Block2 -->
 					<div class="block2">

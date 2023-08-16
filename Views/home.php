@@ -1,10 +1,9 @@
 <?php 
 	headerTienda($data);
-	getModal('modalCarrito',$data);
 	$arrSlider = $data['slider'];
 	$arrBanner = $data['banner'];
 	$arrProductos = $data['productos'];
-?>
+ ?>
 	<!-- Slider -->
 	<section class="section-slide">
 		<div class="wrap-slick1">
@@ -12,7 +11,7 @@
 			<?php 
 			for ($i=0; $i < count($arrSlider) ; $i++) { 
 				$ruta = $arrSlider[$i]['ruta'];
-			?>
+			 ?>
 				<div class="item-slick1" style="background-image: url(<?= $arrSlider[$i]['portada'] ?>);">
 					<div class="container h-full">
 						<div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
@@ -48,9 +47,9 @@
 		<div class="container">
 			<div class="row">
 				<?php 
-				for ($j=0; $j < count($arrBanner); $j++) { 
-					$ruta = $arrBanner[$j]['ruta'];
-				?>
+				for ($j=0; $j < count($arrBanner); $j++) {
+					$ruta = $arrBanner[$j]['ruta']; 
+				 ?>
 				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
 					<!-- Block1 -->
 					<div class="block1 wrap-pic-w">
@@ -75,7 +74,7 @@
 				</div>
 				<?php 
 				}
-				?>
+				 ?>
 			</div>
 		</div>
 	</div>
@@ -91,27 +90,27 @@
 			<hr>
 			<div class="row isotope-grid">
 			<?php 
-				for ($p=0; $p < count($arrProductos) ; $p++) { 
-					$ruta = $arrProductos[$p]['ruta'];
+				for ($p=0; $p < count($arrProductos) ; $p++) {
+					$rutaProducto = $arrProductos[$p]['ruta']; 
 					if(count($arrProductos[$p]['images']) > 0 ){
 						$portada = $arrProductos[$p]['images'][0]['url_image'];
 					}else{
 						$portada = media().'/images/uploads/product.png';
 					}
-			?>
+			 ?>
 				<div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
 					<!-- Block2 -->
 					<div class="block2">
 						<div class="block2-pic hov-img0">
 							<img src="<?= $portada ?>" alt="<?= $arrProductos[$p]['nombre'] ?>">
-							<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+							<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$rutaProducto; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
 								Ver producto
 							</a>
 						</div>
 
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
-								<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$ruta; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								<a href="<?= base_url().'/tienda/producto/'.$arrProductos[$p]['idproducto'].'/'.$rutaProducto; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
 									<?= $arrProductos[$p]['nombre'] ?>
 								</a>
 
@@ -141,5 +140,5 @@
 	</section>
 <?php 
 	footerTienda($data);
-?>
+ ?>
 

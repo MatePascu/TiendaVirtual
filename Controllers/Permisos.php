@@ -1,42 +1,51 @@
 <?php 
 
 	class Permisos extends Controllers{
-		public function __construct(){
+		public function __construct()
+		{
 			parent::__construct();
 		}
 
-		public function getPermisosRol(int $idrol){
+		public function getPermisosRol(int $idrol)
+		{
 			$rolid = intval($idrol);
-			if($rolid > 0){
+			if($rolid > 0)
+			{
 				$arrModulos = $this->model->selectModulos();
 				$arrPermisosRol = $this->model->selectPermisosRol($rolid);
 				$arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
 				$arrPermisoRol = array('idrol' => $rolid );
 
-				if(empty($arrPermisosRol)){
-					for ($i=0; $i < count($arrModulos) ; $i++) { //Si no tiene permisos los asigna a todos en 0
+				if(empty($arrPermisosRol))
+				{
+					for ($i=0; $i < count($arrModulos) ; $i++) { 
+
 						$arrModulos[$i]['permisos'] = $arrPermisos;
 					}
 				}else{
-					for ($i=0; $i < count($arrModulos); $i++) { //Si tiene permisos recorre el array y se los va asignando
+					for ($i=0; $i < count($arrModulos); $i++) {
 						$arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
 						if(isset($arrPermisosRol[$i])){
 							$arrPermisos = array('r' => $arrPermisosRol[$i]['r'], 
-																	'w' => $arrPermisosRol[$i]['w'], 
-																	'u' => $arrPermisosRol[$i]['u'], 
-																	'd' => $arrPermisosRol[$i]['d']); 
+												 'w' => $arrPermisosRol[$i]['w'], 
+												 'u' => $arrPermisosRol[$i]['u'], 
+												 'd' => $arrPermisosRol[$i]['d'] 
+												);
 						}
-						$arrModulos[$i]['permisos'] = $arrPermisos; //Si el modulo no tiene permisos asignado aca se le asignan todos en 0
+						$arrModulos[$i]['permisos'] = $arrPermisos;
 					}
 				}
 				$arrPermisoRol['modulos'] = $arrModulos;
 				$html = getModal("modalPermisos",$arrPermisoRol);
+				//dep($arrPermisoRol);
 			}
 			die();
 		}
 
-		public function setPermisos(){
-			if($_POST){
+		public function setPermisos()
+		{
+			if($_POST)
+			{
 				$intIdrol = intval($_POST['idrol']);
 				$modulos = $_POST['modulos'];
 
@@ -49,7 +58,8 @@
 					$d = empty($modulo['d']) ? 0 : 1;
 					$requestPermiso = $this->model->insertPermisos($intIdrol, $idModulo, $r, $w, $u, $d);
 				}
-				if($requestPermiso > 0){
+				if($requestPermiso > 0)
+				{
 					$arrResponse = array('status' => true, 'msg' => 'Permisos asignados correctamente.');
 				}else{
 					$arrResponse = array("status" => false, "msg" => 'No es posible asignar los permisos.');
@@ -58,5 +68,6 @@
 			}
 			die();
 		}
+
 	}
-?>
+ ?>

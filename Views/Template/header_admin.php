@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8">
     <meta name="description" content="Tienda Virtual Abel OSH">
@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
   </head>
   <body class="app sidebar-mini">
-    <div id="divLoading">
+    <div id="divLoading" >
       <div>
         <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
       </div>

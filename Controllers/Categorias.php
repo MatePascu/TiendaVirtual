@@ -1,16 +1,20 @@
 <?php
 	class Categorias extends Controllers{
-		public function __construct(){
+		public function __construct()
+		{
 			parent::__construct();
 			session_start();
-			//session_regenerate_id(true);
-			if(empty($_SESSION['login'])){
+			session_regenerate_id(true);
+			if(empty($_SESSION['login']))
+			{
 				header('Location: '.base_url().'/login');
+				die();
 			}
 			getPermisos(6);
 		}
 
-		public function Categorias(){
+		public function Categorias()
+		{
 			if(empty($_SESSION['permisosMod']['r'])){
 				header("Location:".base_url().'/dashboard');
 			}
@@ -23,31 +27,34 @@
 
 		public function setCategoria(){
 			if($_POST){
-				if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) ){
+				if(empty($_POST['txtNombre']) || empty($_POST['txtDescripcion']) || empty($_POST['listStatus']) )
+				{
 					$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
 				}else{
+					
 					$intIdcategoria = intval($_POST['idCategoria']);
-					$strCategoria = strClean($_POST['txtNombre']);
+					$strCategoria =  strClean($_POST['txtNombre']);
 					$strDescipcion = strClean($_POST['txtDescripcion']);
 					$intStatus = intval($_POST['listStatus']);
 
 					$ruta = strtolower(clear_cadena($strCategoria));
 					$ruta = str_replace(" ","-",$ruta);
 
-					$foto = $_FILES['foto']; //Con $_FILES se obtienen los archivos que se mandan desde functions.js
+					$foto   	 	= $_FILES['foto'];
 					$nombre_foto 	= $foto['name'];
-					$type = $foto['type'];
-					$url_temp = $foto['tmp_name'];
+					$type 		 	= $foto['type'];
+					$url_temp    	= $foto['tmp_name'];
 					$imgPortada 	= 'portada_categoria.png';
 					$request_cateria = "";
-					if($nombre_foto != ''){ 
-						$imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg'; //md5 encripta la fecha
+					if($nombre_foto != ''){
+						$imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
 					}
 
-					if($intIdcategoria == 0){
+					if($intIdcategoria == 0)
+					{
 						//Crear
 						if($_SESSION['permisosMod']['w']){
-							$request_cateria = $this->model->insertCategoria($strCategoria, $strDescipcion, $imgPortada, $ruta, $intStatus);
+							$request_cateria = $this->model->inserCategoria($strCategoria, $strDescipcion,$imgPortada,$ruta,$intStatus);
 							$option = 1;
 						}
 					}else{
@@ -58,21 +65,23 @@
 									$imgPortada = $_POST['foto_actual'];
 								}
 							}
-							$request_cateria = $this->model->updateCategoria($intIdcategoria,$strCategoria, $strDescipcion, $imgPortada, $ruta, $intStatus);
+							$request_cateria = $this->model->updateCategoria($intIdcategoria,$strCategoria, $strDescipcion,$imgPortada,$ruta,$intStatus);
 							$option = 2;
 						}
 					}
-					if($request_cateria > 0){
-						if($option == 1){
+					if($request_cateria > 0 )
+					{
+						if($option == 1)
+						{
 							$arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-							if($nombre_foto != ''){ uploadImage($foto, $imgPortada); } //Funcion en el helpers
+							if($nombre_foto != ''){ uploadImage($foto,$imgPortada); }
 						}else{
 							$arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
-							if($nombre_foto != ''){ uploadImage($foto,$imgPortada); } //Si se cargo una imagen la guarda
+							if($nombre_foto != ''){ uploadImage($foto,$imgPortada); }
 
 							if(($nombre_foto == '' && $_POST['foto_remove'] == 1 && $_POST['foto_actual'] != 'portada_categoria.png')
 								|| ($nombre_foto != '' && $_POST['foto_actual'] != 'portada_categoria.png')){
-								deleteFile($_POST['foto_actual']); //Funcion en helpers
+								deleteFile($_POST['foto_actual']);
 							}
 						}
 					}else if($request_cateria == 'exist'){
@@ -82,11 +91,12 @@
 					}
 				}
 				echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
-			} 
+			}
 			die();
 		}
 
-		public function getCategorias(){
+		public function getCategorias()
+		{
 			if($_SESSION['permisosMod']['r']){
 				$arrData = $this->model->selectCategorias();
 				for ($i=0; $i < count($arrData); $i++) {
@@ -94,7 +104,8 @@
 					$btnEdit = '';
 					$btnDelete = '';
 
-					if($arrData[$i]['status'] == 1){
+					if($arrData[$i]['status'] == 1)
+					{
 						$arrData[$i]['status'] = '<span class="badge badge-success">Activo</span>';
 					}else{
 						$arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
@@ -116,12 +127,15 @@
 			die();
 		}
 
-		public function getCategoria($idcategoria){
+		public function getCategoria($idcategoria)
+		{
 			if($_SESSION['permisosMod']['r']){
 				$intIdcategoria = intval($idcategoria);
-				if($intIdcategoria > 0){
+				if($intIdcategoria > 0)
+				{
 					$arrData = $this->model->selectCategoria($intIdcategoria);
-					if(empty($arrData)){
+					if(empty($arrData))
+					{
 						$arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
 					}else{
 						$arrData['url_portada'] = media().'/images/uploads/'.$arrData['portada'];
@@ -133,7 +147,8 @@
 			die();
 		}
 
-		public function delCategoria(){
+		public function delCategoria()
+		{
 			if($_POST){
 				if($_SESSION['permisosMod']['d']){
 					$intIdcategoria = intval($_POST['idCategoria']);
@@ -165,5 +180,8 @@
 			echo $htmlOptions;
 			die();	
 		}
+
 	}
-?>
+
+
+ ?>

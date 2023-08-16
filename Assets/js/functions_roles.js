@@ -1,12 +1,12 @@
 var tableRoles;
-let divLoading = document.querySelector("#divLoading");
-
+var divLoading = document.querySelector("#divLoading");
 document.addEventListener('DOMContentLoaded', function(){
+
 	tableRoles = $('#tableRoles').dataTable( {
 		"aProcessing":true,
 		"aServerSide":true,
         "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
+        	"url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json"
         },
         "ajax":{
             "url": " "+base_url+"/Roles/getRoles",
@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function(){
         var strNombre = document.querySelector('#txtNombre').value;
         var strDescripcion = document.querySelector('#txtDescripcion').value;
         var intStatus = document.querySelector('#listStatus').value;        
-        if(strNombre == '' || strDescripcion == '' || intStatus == ''){
+        if(strNombre == '' || strDescripcion == '' || intStatus == '')
+        {
             swal("Atención", "Todos los campos son obligatorios." , "error");
             return false;
         }
@@ -45,9 +46,11 @@ document.addEventListener('DOMContentLoaded', function(){
         request.open("POST",ajaxUrl,true);
         request.send(formData);
         request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
+           if(request.readyState == 4 && request.status == 200){
+                
                 var objData = JSON.parse(request.responseText);
-                if(objData.status){
+                if(objData.status)
+                {
                     $('#modalFormRol').modal("hide");
                     formRol.reset();
                     swal("Roles de usuario", objData.msg ,"success");
@@ -55,16 +58,20 @@ document.addEventListener('DOMContentLoaded', function(){
                 }else{
                     swal("Error", objData.msg , "error");
                 }              
-            }
+            } 
             divLoading.style.display = "none";
             return false;
         }
+
+        
     }
+
 });
 
 $('#tableRoles').DataTable();
 
 function openModal(){
+
     document.querySelector('#idRol').value ="";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
@@ -94,8 +101,10 @@ function fntEditRol(idrol){
 
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
+            
             var objData = JSON.parse(request.responseText);
-            if(objData.status){
+            if(objData.status)
+            {
                 document.querySelector("#idRol").value = objData.data.idrol;
                 document.querySelector("#txtNombre").value = objData.data.nombrerol;
                 document.querySelector("#txtDescripcion").value = objData.data.descripcion;
@@ -107,8 +116,9 @@ function fntEditRol(idrol){
                     var optionSelect = '<option value="2" selected class="notBlock">Inactivo</option>';
                 }
                 var htmlSelect = `${optionSelect}
-                                <option value="1">Activo</option>
-                                <option value="2">Inactivo</option>`;
+                                  <option value="1">Activo</option>
+                                  <option value="2">Inactivo</option>
+                                `;
                 document.querySelector("#listStatus").innerHTML = htmlSelect;
                 $('#modalFormRol').modal('show');
             }else{
@@ -116,6 +126,7 @@ function fntEditRol(idrol){
             }
         }
     }
+
 }
 
 function fntDelRol(idrol){
@@ -131,7 +142,8 @@ function fntDelRol(idrol){
         closeOnCancel: true
     }, function(isConfirm) {
         
-        if (isConfirm) {
+        if (isConfirm) 
+        {
             var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             var ajaxUrl = base_url+'/Roles/delRol/';
             var strData = "idrol="+idrol;
@@ -141,15 +153,21 @@ function fntDelRol(idrol){
             request.onreadystatechange = function(){
                 if(request.readyState == 4 && request.status == 200){
                     var objData = JSON.parse(request.responseText);
-                    if(objData.status){
+                    if(objData.status)
+                    {
                         swal("Eliminar!", objData.msg , "success");
-                        tableRoles.api().ajax.reload();
+                        tableRoles.api().ajax.reload(function(){
+                            fntEditRol();
+                            fntDelRol();
+                            fntPermisos();
+                        });
                     }else{
                         swal("Atención!", objData.msg , "error");
                     }
                 }
             }
         }
+
     });
 }
 
@@ -181,11 +199,13 @@ function fntSavePermisos(evnet){
     request.onreadystatechange = function(){
         if(request.readyState == 4 && request.status == 200){
             var objData = JSON.parse(request.responseText);
-            if(objData.status){
+            if(objData.status)
+            {
                 swal("Permisos de usuario", objData.msg ,"success");
             }else{
                 swal("Error", objData.msg , "error");
             }
         }
     }
+    
 }
