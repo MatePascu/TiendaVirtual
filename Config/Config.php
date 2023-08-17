@@ -34,9 +34,9 @@
 
 	//Datos envio de correo
 	const NOMBRE_REMITENTE = "Tienda Virtual";
-	const EMAIL_REMITENTE = "matepascucci2000@gmail.com";
+	const EMAIL_REMITENTE = "no-reply@abelosh.com";
 	const NOMBRE_EMPESA = "Tienda Virtual";
-	const WEB_EMPRESA = "https://portfolio-mp.netlify.app";
+	const WEB_EMPRESA = "www.abelosh.com";
 
 	//Datos Empresa
 	const DIRECCION = "Avenida las Américas Zona 13, Guatemala";
@@ -45,12 +45,24 @@
 	const EMAIL_PEDIDOS = "info@abelosh.com";
 
 	const CAT_SLIDER = "1,2,3";
-	const CAT_BANNER = "1,2,3";
+	const CAT_BANNER = "4,5,6";
 
 	//Datos para Encriptar / Desencriptar
 	const KEY = 'abelosh';
 	const METHODENCRIPT = "AES-128-ECB";
 
 	//Envío
-	const COSTOENVIO = 10;
+	const COSTOENVIO = 50;
+
+	//Módulos
+	const MCLIENTES = 3;
+	const MPEDIDOS = 5;
+
+	//Roles
+	const RADMINISTRADOR = 1;
+	const RCLIENTES = 7;
+
+	const STATUS = array('Completo','Aprobado','Cancelado','Reembolsado','Pendiente','Entregado');
+	
+
 ?>

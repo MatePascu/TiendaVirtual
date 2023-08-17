@@ -209,19 +209,19 @@
     }
     
     function getTokenPaypal(){
-        $payLogin = curl_init(URLPAYPAL."/v1/oauth2/token"); //Indica url a donde conectarse
-        curl_setopt($payLogin, CURLOPT_SSL_VERIFYPEER, FALSE); //Verifica certificado SSL en la coneccion
-        curl_setopt($payLogin, CURLOPT_RETURNTRANSFER,TRUE); //Indica que retorna informacion
-        curl_setopt($payLogin, CURLOPT_USERPWD, IDCLIENTE.":".SECRET); //Datos del cliente
+        $payLogin = curl_init(URLPAYPAL."/v1/oauth2/token");
+        curl_setopt($payLogin, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($payLogin, CURLOPT_RETURNTRANSFER,TRUE);
+        curl_setopt($payLogin, CURLOPT_USERPWD, IDCLIENTE.":".SECRET);
         curl_setopt($payLogin, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
-        $result = curl_exec($payLogin); //Ejecuta
+        $result = curl_exec($payLogin);
         $err = curl_error($payLogin);
         curl_close($payLogin);
         if($err){
             $request = "CURL Error #:" . $err;
         }else{
             $objData = json_decode($result);
-            $request =  $objData->access_token;
+             $request =  $objData->access_token;
         }
         return $request;
     }
@@ -230,15 +230,15 @@
         $content_type = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
         if($token != null){
             $arrHeader = array('Content-Type:'.$content_type,
-                                'Authorization: Bearer '.$token);
+                            'Authorization: Bearer '.$token);
         }else{
             $arrHeader = array('Content-Type:'.$content_type);
         }
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $ruta);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); //Indica que va a obtener informacion
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader); //Headers
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
         $result = curl_exec($ch);
         $err = curl_error($ch);
         curl_close($ch);
@@ -274,4 +274,5 @@
         }
         return $request;
     }
-?>
+
+ ?>
