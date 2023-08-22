@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 30-03-2021 a las 08:20:37
+-- Tiempo de generación: 25-04-2021 a las 06:20:36
 -- Versión del servidor: 5.7.31
--- Versión de PHP: 7.3.21
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `detalle_pedido` (
   PRIMARY KEY (`id`),
   KEY `pedidoid` (`pedidoid`),
   KEY `productoid` (`productoid`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_pedido`
@@ -106,7 +106,18 @@ INSERT INTO `detalle_pedido` (`id`, `pedidoid`, `productoid`, `precio`, `cantida
 (28, 13, 3, '200.00', 1),
 (29, 13, 2, '110.00', 1),
 (30, 14, 9, '120.00', 2),
-(31, 14, 7, '100.00', 1);
+(31, 14, 7, '100.00', 1),
+(32, 15, 12, '250.00', 1),
+(33, 15, 8, '50.00', 1),
+(34, 15, 6, '50.00', 1),
+(35, 16, 8, '50.00', 2),
+(36, 16, 9, '120.00', 1),
+(37, 16, 4, '50.00', 3),
+(38, 17, 12, '250.00', 1),
+(39, 17, 11, '690.00', 1),
+(40, 18, 12, '250.00', 1),
+(41, 18, 9, '120.00', 1),
+(42, 19, 3, '200.00', 1);
 
 -- --------------------------------------------------------
 
@@ -222,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `pedido` (
   PRIMARY KEY (`idpedido`),
   KEY `personaid` (`personaid`),
   KEY `tipopagoid` (`tipopagoid`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `pedido`
@@ -241,7 +252,12 @@ INSERT INTO `pedido` (`idpedido`, `referenciacobro`, `idtransaccionpaypal`, `dat
 (11, NULL, '5B6699765E4675415', '{\"create_time\":\"2021-02-02T06:36:24Z\",\"update_time\":\"2021-02-02T06:37:29Z\",\"id\":\"0EE39518MJ871604Y\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $200 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"200.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"5B6699765E4675415\",\"final_capture\":true,\"create_time\":\"2021-02-02T06:37:29Z\",\"update_time\":\"2021-02-02T06:37:29Z\",\"amount\":{\"value\":\"200.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/5B6699765E4675415\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/5B6699765E4675415/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/0EE39518MJ871604Y\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/0EE39518MJ871604Y\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-02-02 00:37:31', '50.00', '200.00', 1, 'Avenida Las Américas, Guatemala', 'Completo'),
 (12, NULL, '59T82017PV181852C', '{\"create_time\":\"2021-02-02T06:54:31Z\",\"update_time\":\"2021-02-02T06:55:20Z\",\"id\":\"09945675P26393337\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $400 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"400.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"59T82017PV181852C\",\"final_capture\":true,\"create_time\":\"2021-02-02T06:55:20Z\",\"update_time\":\"2021-02-02T06:55:20Z\",\"amount\":{\"value\":\"400.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/59T82017PV181852C\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/59T82017PV181852C/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/09945675P26393337\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/09945675P26393337\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-02-02 00:55:22', '50.00', '400.00', 1, 'Avenida Las Américas, Guatemala', 'Completo'),
 (13, NULL, '89T8947688556831X', '{\"create_time\":\"2021-02-11T06:17:03Z\",\"update_time\":\"2021-02-11T06:22:46Z\",\"id\":\"37K32135161933947\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $410 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"410.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"89T8947688556831X\",\"final_capture\":true,\"create_time\":\"2021-02-11T06:22:46Z\",\"update_time\":\"2021-02-11T06:22:46Z\",\"amount\":{\"value\":\"410.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/89T8947688556831X\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/89T8947688556831X/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/37K32135161933947\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/37K32135161933947\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-02-11 00:22:49', '50.00', '410.00', 1, 'Avenida Las Américas, Guatemala', 'Reembolsado'),
-(14, NULL, '91E06461TP650463J', '{\"create_time\":\"2021-02-11T06:32:13Z\",\"update_time\":\"2021-02-11T06:32:57Z\",\"id\":\"9D4191826X5234304\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $390 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"390.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"91E06461TP650463J\",\"final_capture\":true,\"create_time\":\"2021-02-11T06:32:57Z\",\"update_time\":\"2021-02-11T06:32:57Z\",\"amount\":{\"value\":\"390.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/91E06461TP650463J\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/91E06461TP650463J/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9D4191826X5234304\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9D4191826X5234304\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-02-11 00:33:00', '50.00', '390.00', 1, 'Avenida Las Américas, Guatemala', 'Completo');
+(14, NULL, '91E06461TP650463J', '{\"create_time\":\"2021-02-11T06:32:13Z\",\"update_time\":\"2021-02-11T06:32:57Z\",\"id\":\"9D4191826X5234304\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $390 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"390.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"91E06461TP650463J\",\"final_capture\":true,\"create_time\":\"2021-02-11T06:32:57Z\",\"update_time\":\"2021-02-11T06:32:57Z\",\"amount\":{\"value\":\"390.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/91E06461TP650463J\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/91E06461TP650463J/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9D4191826X5234304\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9D4191826X5234304\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-02-11 00:33:00', '50.00', '390.00', 1, 'Avenida Las Américas, Guatemala', 'Completo'),
+(15, '465468798', NULL, NULL, 21, '2021-04-14 22:13:29', '50.00', '400.00', 3, 'Guatemala, Guatemala', 'Completo'),
+(16, NULL, '5Y6609132B837933T', '{\"create_time\":\"2021-04-15T04:14:33Z\",\"update_time\":\"2021-04-15T04:16:19Z\",\"id\":\"9T986823RR525383D\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $420 \",\"reference_id\":\"default\",\"amount\":{\"value\":\"420.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"5Y6609132B837933T\",\"final_capture\":true,\"create_time\":\"2021-04-15T04:16:19Z\",\"update_time\":\"2021-04-15T04:16:19Z\",\"amount\":{\"value\":\"420.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/5Y6609132B837933T\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/5Y6609132B837933T/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9T986823RR525383D\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/9T986823RR525383D\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 9, '2021-04-14 22:16:21', '50.00', '420.00', 1, 'Antigua Guatemala, Antigua Guatemala', 'Completo'),
+(17, NULL, '1RJ71409ML289001F', '{\"create_time\":\"2021-04-21T08:05:46Z\",\"update_time\":\"2021-04-21T08:07:21Z\",\"id\":\"4XX181061C111481V\",\"intent\":\"CAPTURE\",\"status\":\"COMPLETED\",\"payer\":{\"email_address\":\"sb-iimwo4579006@personal.example.com\",\"payer_id\":\"ZTA3QXTY5JS6Q\",\"address\":{\"country_code\":\"GT\"},\"name\":{\"given_name\":\"John\",\"surname\":\"Doe\"}},\"purchase_units\":[{\"description\":\"Compra de artículos en Tienda Virtual por $990 \",\"reference_id\":\"default\",\"soft_descriptor\":\"PAYPAL *JOHNDOESTES\",\"amount\":{\"value\":\"990.00\",\"currency_code\":\"USD\"},\"payee\":{\"email_address\":\"sb-6z0da4580133@business.example.com\",\"merchant_id\":\"ULNZF7CTTE748\"},\"shipping\":{\"name\":{\"full_name\":\"John Doe\"},\"address\":{\"address_line_1\":\"Free Trade Zone\",\"admin_area_2\":\"Guatemala City\",\"admin_area_1\":\"Guatemala City\",\"postal_code\":\"01001\",\"country_code\":\"GT\"}},\"payments\":{\"captures\":[{\"status\":\"COMPLETED\",\"id\":\"1RJ71409ML289001F\",\"final_capture\":true,\"create_time\":\"2021-04-21T08:07:21Z\",\"update_time\":\"2021-04-21T08:07:21Z\",\"amount\":{\"value\":\"990.00\",\"currency_code\":\"USD\"},\"seller_protection\":{\"status\":\"ELIGIBLE\",\"dispute_categories\":[\"ITEM_NOT_RECEIVED\",\"UNAUTHORIZED_TRANSACTION\"]},\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/1RJ71409ML289001F\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"},{\"href\":\"https://api.sandbox.paypal.com/v2/payments/captures/1RJ71409ML289001F/refund\",\"rel\":\"refund\",\"method\":\"POST\",\"title\":\"POST\"},{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/4XX181061C111481V\",\"rel\":\"up\",\"method\":\"GET\",\"title\":\"GET\"}]}]}}],\"links\":[{\"href\":\"https://api.sandbox.paypal.com/v2/checkout/orders/4XX181061C111481V\",\"rel\":\"self\",\"method\":\"GET\",\"title\":\"GET\"}]}', 21, '2021-04-21 02:07:22', '50.00', '990.00', 1, 'Guatemala, Guatemala', 'Reembolsado'),
+(18, '654657898', NULL, NULL, 21, '2021-04-24 03:41:19', '50.00', '420.00', 3, 'Antigua Guatemala, Guatemala', 'Completo'),
+(19, '546587898', NULL, NULL, 9, '2021-04-24 03:44:32', '50.00', '250.00', 4, 'Guatemala, Guatemala', 'Completo');
 
 -- --------------------------------------------------------
 
@@ -261,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `permisos` (
   PRIMARY KEY (`idpermiso`),
   KEY `rolid` (`rolid`),
   KEY `moduloid` (`moduloid`)
-) ENGINE=InnoDB AUTO_INCREMENT=668 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=722 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -274,24 +290,24 @@ INSERT INTO `permisos` (`idpermiso`, `rolid`, `moduloid`, `r`, `w`, `u`, `d`) VA
 (353, 2, 4, 0, 0, 0, 0),
 (354, 2, 5, 0, 0, 0, 0),
 (355, 2, 6, 0, 0, 0, 0),
-(596, 3, 1, 1, 0, 0, 0),
-(597, 3, 2, 0, 0, 0, 0),
-(598, 3, 3, 0, 0, 0, 0),
-(599, 3, 4, 0, 0, 0, 0),
-(600, 3, 5, 0, 0, 0, 0),
-(601, 3, 6, 0, 0, 0, 0),
-(638, 7, 1, 0, 0, 0, 0),
-(639, 7, 2, 0, 0, 0, 0),
-(640, 7, 3, 0, 0, 0, 0),
-(641, 7, 4, 0, 0, 0, 0),
-(642, 7, 5, 1, 0, 0, 0),
-(643, 7, 6, 0, 0, 0, 0),
-(662, 1, 1, 1, 0, 0, 0),
-(663, 1, 2, 1, 1, 1, 1),
-(664, 1, 3, 1, 1, 1, 1),
-(665, 1, 4, 1, 1, 1, 1),
-(666, 1, 5, 1, 1, 1, 1),
-(667, 1, 6, 1, 1, 1, 1);
+(674, 1, 1, 1, 0, 0, 0),
+(675, 1, 2, 1, 1, 1, 1),
+(676, 1, 3, 1, 1, 1, 1),
+(677, 1, 4, 1, 1, 1, 1),
+(678, 1, 5, 1, 1, 1, 1),
+(679, 1, 6, 1, 1, 1, 1),
+(698, 3, 1, 1, 0, 0, 0),
+(699, 3, 2, 0, 0, 0, 0),
+(700, 3, 3, 0, 0, 0, 0),
+(701, 3, 4, 1, 0, 0, 0),
+(702, 3, 5, 1, 0, 0, 0),
+(703, 3, 6, 0, 0, 0, 0),
+(716, 7, 1, 1, 0, 0, 0),
+(717, 7, 2, 0, 0, 0, 0),
+(718, 7, 3, 0, 0, 0, 0),
+(719, 7, 4, 0, 0, 0, 0),
+(720, 7, 5, 1, 0, 0, 0),
+(721, 7, 6, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -344,7 +360,7 @@ INSERT INTO `persona` (`idpersona`, `identificacion`, `nombres`, `apellidos`, `t
 (18, '46584654711', 'Arnold', 'Gutierrez', 78465454, 'arnold@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'CF', 'Arnold', 'Ciudad', '', 7, '2020-12-05 02:02:31', 1),
 (19, '64894654', 'Julieta', 'Estrada', 4654564, 'julieta@info.com', 'b6602f58690ca41488e97cd28153671356747c951c55541b6c8d8b8493eb7143', 'CF', 'Julieta', 'Ciudad', '', 7, '2020-12-05 02:22:30', 1),
 (20, '', 'Jon', 'Beta', 456546545, 'jon@info.com', '423d557f5d78958e981a85aed290d2d4d5453f9b2857e6b9d34bac1a19e3d740', '', '', '', '', 7, '2020-12-28 03:36:39', 1),
-(21, '', 'Ale', 'Pérez', 4654798878, 'ale@info.com', '973b0c9703e6ee636d7f6afbbb0fd2a4934fea984e7565a77dbbd53b53129e9c', '', '', '', '', 7, '2020-12-28 03:42:23', 1);
+(21, '745845214558', 'Ale', 'Pérez', 4654798878, 'ale@info.com', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'CF', 'Ale', 'Ciudad', '', 7, '2020-12-28 03:42:23', 1);
 
 -- --------------------------------------------------------
 
@@ -383,10 +399,10 @@ INSERT INTO `producto` (`idproducto`, `categoriaid`, `codigo`, `nombre`, `descri
 (7, 5, '65465454', 'Producto 7', '<p>Datos del producto</p>', '100.00', 10, '', '2020-11-23 03:39:59', 'producto-7', 1),
 (8, 5, '6546545', 'Producto 8', '<p>Descripc&iacute;on</p>', '50.00', 10, '', '2020-11-23 03:43:29', 'producto-8', 1),
 (9, 2, '546455456', 'Producto Nuevo', '<p>Datos del producto</p>', '120.00', 50, '', '2020-12-01 12:52:33', 'producto-nuevo', 1),
-(10, 1, '654546544', 'Producto Nuevo', '<p>Descripc&oacute;n</p>', '75000.00', 0, '', '2020-12-02 03:52:09', 'producto-nuevo', 1),
-(11, 1, '4657897897', 'Producto Prueba AX-12', '<p>Descripcipci&oacute;n producto prueba</p> <ul> <li>Uno</li> <li>Dos</li> <li>Tres</li> </ul> <p>&nbsp;</p>', '69000.00', 50, '', '2020-12-06 02:30:02', 'producto-prueba-ax-12', 1),
-(12, 1, '4894647878', 'Chaqueta Azúl', '<p>Descripci&oacute;n producto ejemplo</p> <ul> <li>Uno</li> <li>Dos</li> <li>Tres</li> </ul>', '89000.00', 10, '', '2020-12-11 02:23:22', 'chaqueta-azul', 1),
-(13, 1, '4654654564', 'Producto nuevo Ruta AX-1', '<p>Descripci&oacute;n producto Nuevo</p>', '105000.00', 5, '', '2020-12-18 00:44:28', 'producto-nuevo-ruta-ax-1', 1);
+(10, 1, '654546544', 'Producto Nuevo', '<p>Descripc&oacute;n</p>', '470.00', 0, '', '2020-12-02 03:52:09', 'producto-nuevo', 1),
+(11, 1, '4657897897', 'Producto Prueba AX-12', '<p>Descripcipci&oacute;n producto prueba</p> <ul> <li>Uno</li> <li>Dos</li> <li>Tres</li> </ul> <p>&nbsp;</p>', '690.00', 50, '', '2020-12-06 02:30:02', 'producto-prueba-ax-12', 1),
+(12, 1, '4894647878', 'Chaqueta Azúl', '<p>Descripci&oacute;n producto ejemplo</p> <ul> <li>Uno</li> <li>Dos</li> <li>Tres</li> </ul>', '250.00', 10, '', '2020-12-11 02:23:22', 'chaqueta-azul', 1),
+(13, 1, '4654654564', 'Producto nuevo Ruta AX-1', '<p>Descripci&oacute;n producto Nuevo</p>', '150.00', 5, '', '2020-12-18 00:44:28', 'producto-nuevo-ruta-ax-1', 1);
 
 -- --------------------------------------------------------
 
@@ -404,14 +420,15 @@ CREATE TABLE IF NOT EXISTS `reembolso` (
   `status` varchar(150) COLLATE utf8mb4_swedish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `pedidoid` (`pedidoid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 --
 -- Volcado de datos para la tabla `reembolso`
 --
 
 INSERT INTO `reembolso` (`id`, `pedidoid`, `idtransaccion`, `datosreembolso`, `observacion`, `status`) VALUES
-(1, 13, '3YL95553L27747319', '{\"id\":\"3YL95553L27747319\",\"status\":\"COMPLETED\",\"links\":[{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/refunds\\/3YL95553L27747319\",\"rel\":\"self\",\"method\":\"GET\"},{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/captures\\/89T8947688556831X\",\"rel\":\"up\",\"method\":\"GET\"}]}', 'Descripcion reembolso', 'COMPLETED');
+(1, 13, '3YL95553L27747319', '{\"id\":\"3YL95553L27747319\",\"status\":\"COMPLETED\",\"links\":[{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/refunds\\/3YL95553L27747319\",\"rel\":\"self\",\"method\":\"GET\"},{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/captures\\/89T8947688556831X\",\"rel\":\"up\",\"method\":\"GET\"}]}', 'Descripcion reembolso', 'COMPLETED'),
+(2, 17, '54U51016166442224', '{\"id\":\"54U51016166442224\",\"status\":\"COMPLETED\",\"links\":[{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/refunds\\/54U51016166442224\",\"rel\":\"self\",\"method\":\"GET\"},{\"href\":\"https:\\/\\/api.sandbox.paypal.com\\/v2\\/payments\\/captures\\/1RJ71409ML289001F\",\"rel\":\"up\",\"method\":\"GET\"}]}', 'Prueba Tienda Virtual', 'COMPLETED');
 
 -- --------------------------------------------------------
 

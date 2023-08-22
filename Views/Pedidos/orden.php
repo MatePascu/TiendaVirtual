@@ -49,7 +49,7 @@
                 Email: <?= $cliente['email_user'] ?>
                </address>
             </div>
-            <div class="col-4"><b>Orden #<?= $orden['idpedido'] ?></b> 
+            <div class="col-4"><b>Orden #<?= $orden['idpedido'] ?></b><br> 
                 <b>Pago: </b><?= $orden['tipopago'] ?><br>
                 <b>Transacción:</b> <?= $transaccion ?> <br>
                 <b>Estado:</b> <?= $orden['status'] ?> <br>

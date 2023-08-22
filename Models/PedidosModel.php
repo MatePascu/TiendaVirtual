@@ -89,9 +89,8 @@
 			$requestData = $this->select($sql);
 			if(!empty($requestData)){
 				$objData = json_decode($requestData['datospaypal']);
-				//$urlTransaccion = $objData->purchase_units[0]->payments->captures[0]->links[0]->href;
-				//$urlOrden = $objData->purchase_units[0]->payments->captures[0]->links[2]->href;
-				$urlOrden = $objData->links[0]->href;
+				$urlTransaccion = $objData->purchase_units[0]->payments->captures[0]->links[0]->href;
+				$urlOrden = $objData->purchase_units[0]->payments->captures[0]->links[2]->href;
 				$objTransaccion = CurlConnectionGet($urlOrden,"application/json",getTokenPaypal());
 			}
 			return $objTransaccion;
@@ -103,7 +102,7 @@
 			$requestData = $this->select($sql);
 			if(!empty($requestData)){
 				$objData = json_decode($requestData['datospaypal']);
-				$urlReembolso = $objData->links[0]->href;
+				$urlReembolso = $objData->purchase_units[0]->payments->captures[0]->links[1]->href;
 				$objTransaccion = CurlConnectionPost($urlReembolso,"application/json",getTokenPaypal());
 				if(isset($objTransaccion->status) and  $objTransaccion->status == "COMPLETED"){
 					$idpedido = $requestData['idpedido'];
