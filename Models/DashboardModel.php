@@ -122,7 +122,7 @@
 			return $arrVentas;
 		}
 		public function productosTen(){
-			$sql = "SELECT * FROM producto WHERE status = 1 ORDER BY idproducto DESC LIMIT 1,10 ";
+			$sql = "SELECT * FROM producto WHERE status = 1 ORDER BY idproducto DESC LIMIT 10 ";
 			$request = $this->select_all($sql);
 			return $request;
 		}

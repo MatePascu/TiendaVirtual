@@ -1,4 +1,9 @@
 <?php 
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    require 'Libraries/phpmailer/Exception.php';
+    require 'Libraries/phpmailer/PHPMailer.php';
+    require 'Libraries/phpmailer/SMTP.php';
 
 	//Retorla la url del proyecto
 	function base_url()
@@ -53,36 +58,112 @@
     //Envio de correos
     function sendEmail($data,$template)
     {
-        $asunto = $data['asunto'];
-        $emailDestino = $data['email'];
-        $empresa = NOMBRE_REMITENTE;
-        $remitente = EMAIL_REMITENTE;
-        $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
-        //ENVIO DE CORREO
-        $de = "MIME-Version: 1.0\r\n";
-        $de .= "Content-type: text/html; charset=UTF-8\r\n";
-        $de .= "From: {$empresa} <{$remitente}>\r\n";
-        $de .= "Bcc: $emailCopia\r\n";
+        if(ENVIRONMENT == 1){
+            $asunto = $data['asunto'];
+            $emailDestino = $data['email'];
+            $empresa = NOMBRE_REMITENTE;
+            $remitente = EMAIL_REMITENTE;
+            $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
+            //ENVIO DE CORREO
+            $de = "MIME-Version: 1.0\r\n";
+            $de .= "Content-type: text/html; charset=UTF-8\r\n";
+            $de .= "From: {$empresa} <{$remitente}>\r\n";
+            $de .= "Bcc: $emailCopia\r\n";
+            ob_start();
+            require_once("Views/Template/Email/".$template.".php");
+            $mensaje = ob_get_clean();
+            $send = mail($emailDestino, $asunto, $mensaje, $de);
+            return $send;
+        }else{
+           //Create an instance; passing `true` enables exceptions
+            $mail = new PHPMailer(true);
+            ob_start();
+            require_once("Views/Template/Email/".$template.".php");
+            $mensaje = ob_get_clean();
+
+            try {
+                //Server settings
+                $mail->SMTPDebug = 0;                      //Enable verbose debug output
+                $mail->isSMTP();                                            //Send using SMTP
+                $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+                $mail->Username   = 'toolsfordeveloper@gmail.com';          //SMTP username
+                $mail->Password   = '@dmin08a';                               //SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+                $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+                //Recipients
+                $mail->setFrom('toolsfordeveloper@gmail.com', 'Servidor Local');
+                $mail->addAddress($data['email']);     //Add a recipient
+                if(!empty($data['emailCopia'])){
+                    $mail->addBCC($data['emailCopia']);
+                }
+                $mail->CharSet = 'UTF-8';
+                //Content
+                $mail->isHTML(true);                                  //Set email format to HTML
+                $mail->Subject = $data['asunto'];
+                $mail->Body    = $mensaje;
+                
+                $mail->send();
+                return true;
+            } catch (Exception $e) {
+                return false;
+            } 
+        }
+    }
+
+    function sendMailLocal($data,$template){
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
         ob_start();
         require_once("Views/Template/Email/".$template.".php");
         $mensaje = ob_get_clean();
-        $send = mail($emailDestino, $asunto, $mensaje, $de);
-        return $send;
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = 1;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'toolsfordeveloper@gmail.com';                     //SMTP username
+            $mail->Password   = '';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom('toolsfordeveloper@gmail.com', 'Servidor Local');
+            $mail->addAddress($data['email']);     //Add a recipient
+            if(!empty($data['emailCopia'])){
+                $mail->addBCC($data['emailCopia']);
+            }
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $data['asunto'];
+            $mail->Body    = $mensaje;
+            
+            $mail->send();
+            echo 'Mensaje enviado';
+        } catch (Exception $e) {
+            echo "Error en el envío del mensaje: {$mail->ErrorInfo}";
+        }
     }
 
     function getPermisos(int $idmodulo){
         require_once ("Models/PermisosModel.php");
         $objPermisos = new PermisosModel();
-        $idrol = $_SESSION['userData']['idrol'];
-        $arrPermisos = $objPermisos->permisosModulo($idrol);
-        $permisos = '';
-        $permisosMod = '';
-        if(count($arrPermisos) > 0 ){
-            $permisos = $arrPermisos;
-            $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
+        if(!empty($_SESSION['userData'])){
+            $idrol = $_SESSION['userData']['idrol'];
+            $arrPermisos = $objPermisos->permisosModulo($idrol);
+            $permisos = '';
+            $permisosMod = '';
+            if(count($arrPermisos) > 0 ){
+                $permisos = $arrPermisos;
+                $permisosMod = isset($arrPermisos[$idmodulo]) ? $arrPermisos[$idmodulo] : "";
+            }
+            $_SESSION['permisos'] = $permisos;
+            $_SESSION['permisosMod'] = $permisosMod;
         }
-        $_SESSION['permisos'] = $permisos;
-        $_SESSION['permisosMod'] = $permisosMod;
     }
 
     function sessionUser(int $idpersona){
@@ -289,6 +370,44 @@
                       "Noviembre", 
                       "Diciembre");
         return $meses;
+    }
+
+    function getCatFooter(){
+        require_once ("Models/CategoriasModel.php");
+        $objCategoria = new CategoriasModel();
+        $request = $objCategoria->getCategoriasFooter();
+        return $request;
+    }
+
+    function getInfoPage(int $idpagina){
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM post WHERE idpost = $idpagina";
+        $request = $con->select($sql);
+        return $request;
+    }
+
+    function getPageRout(string $ruta){
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM post WHERE ruta = '$ruta' AND status != 0 ";
+        $request = $con->select($sql);
+        if(!empty($request)){
+            $request['portada'] = $request['portada'] != "" ? media()."/images/uploads/".$request['portada'] : "";
+        }
+        return $request;
+    }
+
+    function viewPage(int $idpagina){
+        require_once("Libraries/Core/Mysql.php");
+        $con = new Mysql();
+        $sql = "SELECT * FROM post WHERE idpost = $idpagina ";
+        $request = $con->select($sql);
+        if( ($request['status'] == 2 AND isset($_SESSION['permisosMod']) AND $_SESSION['permisosMod']['u'] == true) OR $request['status'] == 1){
+            return true;        
+        }else{
+            return false;
+        }
     }
 
  ?>

@@ -76,9 +76,9 @@
               </thead>
               <tbody>
                 <?php 
-                    if(count($data['lastOrders']) > 0 ){
-                      foreach ($data['lastOrders'] as $pedido) {
-                 ?>
+                  if(count($data['lastOrders']) > 0 ){
+                    foreach ($data['lastOrders'] as $pedido) {
+                ?>
                 <tr>
                   <td><?= $pedido['idpedido'] ?></td>
                   <td><?= $pedido['nombre'] ?></td>
@@ -110,9 +110,9 @@
               </thead>
               <tbody>
                 <?php 
-                    if(count($data['productosTen']) > 0 ){
-                      foreach ($data['productosTen'] as $producto) {
-                 ?>
+                  if(count($data['productosTen']) > 0 ){
+                    foreach ($data['productosTen'] as $producto) {
+                ?>
                 <tr>
                   <td><?= $producto['idproducto'] ?></td>
                   <td><?= $producto['nombre'] ?></td>
@@ -121,32 +121,12 @@
                 </tr>
                 <?php } 
                   } ?>
-
               </tbody>
             </table>
-              
             </div>
-            
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="tile">
-            <div class="container-title">
-              <h3 class="tile-title">Ventas por mes</h3>
-              <div class="dflex">
-                <input class="date-picker ventasMes" name="ventasMes" placeholder="Mes y Año">
-                <button type="button" class="btnVentasMes btn btn-info btn-sm" onclick="fntSearchVMes()"> <i class="fas fa-search"></i> </button>
-              </div>
-            </div>
-            <div id="graficaMes"></div>
-          </div>
-        </div>
-        
-      </div>
-
     </main>
 <?php footerAdmin($data); ?>
 

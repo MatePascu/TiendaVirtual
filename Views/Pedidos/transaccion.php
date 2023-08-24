@@ -63,14 +63,6 @@
             <div class="col-6">
               <h2 class="page-header"><img src="<?= media(); ?>/images/img-paypal.jpg" ></h2>
             </div>
-            <?php if(!$reembolso){
-                    if($_SESSION['permisosMod']['u'] and $_SESSION['userData']['idrol'] != RCLIENTES ){
-             ?>
-            <div class="col-6 text-right">
-              <button class="btn btn-outline-primary" onclick="fntTransaccion('<?= $idTransaccion ?>');"><i class="fa fa-reply-all" aria-hidden="true"></i> Hacer Reembolso </button>
-            </div>
-            <?php   }
-                 } ?>
           </div>
           <div class="row invoice-info">
             <div class="col-4">

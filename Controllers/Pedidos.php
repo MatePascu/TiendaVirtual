@@ -6,7 +6,6 @@ class Pedidos extends Controllers{
 	{
 		parent::__construct();
 		session_start();
-		session_regenerate_id(true);
 		if(empty($_SESSION['login']))
 		{
 			header('Location: '.base_url().'/login');
@@ -97,7 +96,7 @@ class Pedidos extends Controllers{
 		if( $_SESSION['userData']['idrol'] == RCLIENTES ){
 			$idpersona = $_SESSION['userData']['idpersona'];
 		}
-		$requestTransaccion = $this->model->selectTransPaypal($transaccion,$idpersona);		
+		$requestTransaccion = $this->model->selectTransPaypal($transaccion,$idpersona);	
 		$data['page_tag'] = "Detalles de la transacción - Tienda Virtual";
 		$data['page_title'] = "Detalles de la transacción";
 		$data['page_name'] = "detalle_transaccion";

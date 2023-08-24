@@ -5,8 +5,9 @@
 			$cantCarrito += $product['cantidad'];
 		}
 	}
+	$tituloPreguntas = !empty(getInfoPage(PPREGUNTAS)) ? getInfoPage(PPREGUNTAS)['titulo'] : "";
+	$infoPreguntas = !empty(getInfoPage(PPREGUNTAS)) ? getInfoPage(PPREGUNTAS)['contenido'] : "";
  ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +15,28 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<?php 
+		$nombreSitio = NOMBRE_EMPESA;
+		$descripcion = DESCRIPCION;
+		$nombreProducto = NOMBRE_EMPESA;
+		$urlWeb = base_url();
+		$urlImg = media()."/images/portada.jpg";
+		if(!empty($data['producto'])){
+			//$descripcion = $data['producto']['descripcion'];
+			$descripcion = DESCRIPCION;
+			$nombreProducto = $data['producto']['nombre'];
+			$urlWeb = base_url()."/tienda/producto/".$data['producto']['idproducto']."/".$data['producto']['ruta'];
+			$urlImg = $data['producto']['images'][0]['url_image'];
+		}
+	?>
+	<meta property="og:locale" 		content='es_ES'/>
+	<meta property="og:type"        content="website" />
+	<meta property="og:site_name"	content="<?= $nombreSitio; ?>"/>
+	<meta property="og:description" content="<?= $descripcion; ?>" />
+	<meta property="og:title"       content="<?= $nombreProducto; ?>" />
+	<meta property="og:url"         content="<?= $urlWeb; ?>" />
+	<meta property="og:image"       content="<?= $urlImg; ?>" />
+
 <!--===============================================================================================-->	
 	<link rel="icon" type="image/png" href="<?= media() ?>/tienda/images/favicon.ico"/>
 <!--===============================================================================================-->
@@ -47,6 +70,27 @@
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
+	<!-- Modal -->
+	<div class="modal fade" id="modalAyuda" tabindex="-1" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title"><?= $tituloPreguntas ?></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      		<div class="page-content">
+	        		<?= $infoPreguntas; ?>
+	      		</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<div id="divLoading" >
       <div>
         <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
@@ -60,21 +104,32 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Bienvenido usuario: Carlos Arana
+						<?php if(isset($_SESSION['login'])){ ?>
+						Bienvenido: <?= $_SESSION['userData']['nombres'].' '.$_SESSION['userData']['apellidos'] ?>
+						<?php } ?>
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<a href="#" class="flex-c-m trans-04 p-lr-25" data-toggle="modal" data-target="#modalAyuda" >
 							Help & FAQs
 						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<?php 
+							if(isset($_SESSION['login'])){
+						?>
+						<a href="<?= base_url() ?>/dashboard" class="flex-c-m trans-04 p-lr-25">
 							Mi cuenta
 						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<?php } 
+							if(isset($_SESSION['login'])){
+						?>
+						<a href="<?= base_url() ?>/logout" class="flex-c-m trans-04 p-lr-25">
 							Salir
 						</a>
+						<?php }else{ ?>
+						<a href="<?= base_url() ?>/login" class="flex-c-m trans-04 p-lr-25">
+							Iniciar Sesión
+						</a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>
@@ -101,9 +156,13 @@
 							<li>
 								<a href="<?= base_url(); ?>/carrito">Carrito</a>
 							</li>
-
+							
 							<li>
 								<a href="<?= base_url(); ?>/nosotros">Nosotro</a>
+							</li>
+
+							<li>
+								<a href="<?= base_url(); ?>/sucursales">Sucursales</a>
 							</li>
 
 							<li>
@@ -160,23 +219,34 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Bienvenido Abel
+						<?php if(isset($_SESSION['login'])){ ?>
+						Bienvenido: <?= $_SESSION['userData']['nombres'].' '.$_SESSION['userData']['apellidos'] ?>
+						<?php } ?>
 					</div>
 				</li>
 
 				<li>
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<a href="#" class="flex-c-m p-lr-10 trans-04" data-toggle="modal" data-target="#modalAyuda">
 							Help & FAQs
 						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<?php 
+							if(isset($_SESSION['login'])){
+						?>
+						<a href="<?= base_url() ?>/dashboard" class="flex-c-m trans-04 p-lr-25">
 							Mi cuenta
 						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<?php } 
+							if(isset($_SESSION['login'])){
+						?>
+						<a href="<?= base_url() ?>/logout" class="flex-c-m trans-04 p-lr-25">
 							Salir
 						</a>
+						<?php }else{ ?>
+						<a href="<?= base_url() ?>/login" class="flex-c-m trans-04 p-lr-25">
+							Iniciar Sesión
+						</a>
+						<?php } ?>
 					</div>
 				</li>
 			</ul>
@@ -199,6 +269,10 @@
 				</li>
 
 				<li>
+					<a href="<?= base_url(); ?>/sucursales">Sucursales</a>
+				</li>
+
+				<li>
 					<a href="<?= base_url(); ?>/contacto">Contacto</a>
 				</li>
 			</ul>
@@ -211,11 +285,12 @@
 					<img src="<?= media() ?>/tienda/images/icons/icon-close2.png" alt="CLOSE">
 				</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
+				<form class="wrap-search-header flex-w p-l-15" method="get" action="<?= base_url() ?>/tienda/search" >
 					<button class="flex-c-m trans-04">
 						<i class="zmdi zmdi-search"></i>
 					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
+					<input type="hidden" name="p" value="1">
+					<input class="plh3" type="text" name="s" placeholder="Buscar...">
 				</form>
 			</div>
 		</div>

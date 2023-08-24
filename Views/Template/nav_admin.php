@@ -8,6 +8,12 @@
         </div>
       </div>
       <ul class="app-menu">
+        <li>
+            <a class="app-menu__item" href="<?= base_url(); ?>" target="_blank">
+                <i class="app-menu__icon fa fas fa-globe" aria-hidden="true"></i>
+                <span class="app-menu__label">Ver sitio web</span>
+            </a>
+        </li>
         <?php if(!empty($_SESSION['permisos'][1]['r'])){ ?>
         <li>
             <a class="app-menu__item" href="<?= base_url(); ?>/dashboard">
@@ -62,6 +68,34 @@
             </a>
         </li>
          <?php } ?>
+
+        <?php if(!empty($_SESSION['permisos'][MSUSCRIPTORES]['r'])){ ?>
+        <li>
+            <a class="app-menu__item" href="<?= base_url(); ?>/suscriptores">
+                <i class="app-menu__icon fas fa-user-tie" aria-hidden="true"></i>
+                <span class="app-menu__label">Suscriptores</span>
+            </a>
+        </li>
+         <?php } ?>
+
+         <?php if(!empty($_SESSION['permisos'][MDCONTACTOS]['r'])){ ?>
+        <li>
+            <a class="app-menu__item" href="<?= base_url(); ?>/contactos">
+                <i class="app-menu__icon fas fa-envelope" aria-hidden="true"></i>
+                <span class="app-menu__label">Mensajes</span>
+            </a>
+        </li>
+         <?php } ?>
+
+         <?php if(!empty($_SESSION['permisos'][MDPAGINAS]['r'])){ ?>
+        <li>
+            <a class="app-menu__item" href="<?= base_url(); ?>/paginas">
+                <i class="app-menu__icon fas fa-file-alt" aria-hidden="true"></i>
+                <span class="app-menu__label">Páginas</span>
+            </a>
+        </li>
+         <?php } ?>
+
         <li>
             <a class="app-menu__item" href="<?= base_url(); ?>/logout">
                 <i class="app-menu__icon fa fa-sign-out" aria-hidden="true"></i>

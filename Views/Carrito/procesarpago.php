@@ -8,6 +8,9 @@ foreach ($_SESSION['arrCarrito'] as $producto) {
 }
 $total = $subtotal + COSTOENVIO;
 
+$tituloTerminos = !empty(getInfoPage(PTERMINOS)) ? getInfoPage(PTERMINOS)['titulo'] : "";
+$infoTerminos = !empty(getInfoPage(PTERMINOS)) ? getInfoPage(PTERMINOS)['contenido'] : "";
+
 ?>
 <script
     src="https://www.paypal.com/sdk/js?client-id=<?= IDCLIENTE ?>&currency=<?= CURRENCY ?>">
@@ -63,15 +66,15 @@ $total = $subtotal + COSTOENVIO;
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Términos y Condiciones</h5>
+        <h5 class="modal-title"><?= $tituloTerminos ?></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis sunt, corrupti hic aspernatur cumque alias, ipsam omnis iure ipsum, nostrum labore obcaecati natus repellendus consequatur est nemo sapiente dolorem dicta. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Commodi, voluptas, consectetur iusto delectus quaerat ullam nesciunt! Quae doloribus deserunt qui fugit illo nobis ipsum, accusamus eius perferendis beatae culpa molestias!</p>
-        <br>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing, elit. Nostrum, ipsa. Corporis ratione consectetur cum ipsa vitae repudiandae sed placeat soluta minus. Ex dicta neque, modi voluptatibus error commodi laudantium nobis!</p>
+        	<div class="page-content">
+        		<?= $infoTerminos  ?>
+        	</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

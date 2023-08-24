@@ -70,5 +70,12 @@
 			}
 			return $arrPermisos;
 		}
+
+		public function getRol(int $idrol){
+			$this->intRolid = $idrol;
+			$sql = "SELECT * FROM rol WHERE idrol = $this->intRolid";
+			$request = $this->select($sql);
+			return $request;
+		}
 	}
  ?>

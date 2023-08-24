@@ -119,7 +119,6 @@
                 <button type="button" class="btnVentasMes btn btn-info btn-sm" onclick="fntSearchVMes()"> <i class="fas fa-search"></i> </button>
               </div>
             </div>
-            <?php dep($data['ventasMDia']) ?>
             <div id="graficaMes"></div>
           </div>
         </div>

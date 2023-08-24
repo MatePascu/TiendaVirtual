@@ -13,8 +13,9 @@
 			{
 				$arrModulos = $this->model->selectModulos();
 				$arrPermisosRol = $this->model->selectPermisosRol($rolid);
+				$arrRol = $this->model->getRol($rolid);
 				$arrPermisos = array('r' => 0, 'w' => 0, 'u' => 0, 'd' => 0);
-				$arrPermisoRol = array('idrol' => $rolid );
+				$arrPermisoRol = array('idrol' => $rolid, 'rol' => $arrRol['nombrerol']);
 
 				if(empty($arrPermisosRol))
 				{
@@ -37,7 +38,6 @@
 				}
 				$arrPermisoRol['modulos'] = $arrModulos;
 				$html = getModal("modalPermisos",$arrPermisoRol);
-				//dep($arrPermisoRol);
 			}
 			die();
 		}

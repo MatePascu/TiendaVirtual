@@ -4,13 +4,13 @@
 		{
 			parent::__construct();
 			session_start();
-			session_regenerate_id(true);
+			//session_regenerate_id(true);
 			if(empty($_SESSION['login']))
 			{
 				header('Location: '.base_url().'/login');
 				die();
 			}
-			getPermisos(6);
+			getPermisos(MCATEGORIAS);
 		}
 
 		public function Categorias()
@@ -47,7 +47,7 @@
 					$imgPortada 	= 'portada_categoria.png';
 					$request_cateria = "";
 					if($nombre_foto != ''){
-						$imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
+						$imgPortada = 'img_'.md5(date('d-m-Y H:i:s')).'.jpg';
 					}
 
 					if($intIdcategoria == 0)
