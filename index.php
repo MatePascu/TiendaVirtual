@@ -7,10 +7,8 @@
 	$method = $arrUrl[0];
 	$params = "";
 
-	if(!empty($arrUrl[1]))
-	{
-		if($arrUrl[1] != "")
-		{
+	if(!empty($arrUrl[1])){
+		if($arrUrl[1] != ""){
 			$method = $arrUrl[1];	
 		}
 	}

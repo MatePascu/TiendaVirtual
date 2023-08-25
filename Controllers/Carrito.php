@@ -31,6 +31,5 @@
 			$data['tiposPago'] = $this->getTiposPagoT();
 			$this->views->getView($this,"procesarpago",$data); 
 		}
-
 	}
- ?>
+?>
