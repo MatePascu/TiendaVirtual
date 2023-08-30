@@ -13,10 +13,8 @@
 		}
 	}
 
-	if(!empty($arrUrl[2]))
-	{
-		if($arrUrl[2] != "")
-		{
+	if(!empty($arrUrl[2])){
+		if($arrUrl[2] != ""){
 			for ($i=2; $i < count($arrUrl); $i++) {
 				$params .=  $arrUrl[$i].',';
 				# code...
@@ -26,5 +24,4 @@
 	}
 	require_once("Libraries/Core/Autoload.php");
 	require_once("Libraries/Core/Load.php");
-
- ?>
+?>
