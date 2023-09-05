@@ -26,12 +26,12 @@
 	//Api PayPal
 	//SANDBOX PAYPAL
 	const URLPAYPAL = "https://api-m.sandbox.paypal.com";
-	const IDCLIENTE = "AZit03iz_ejMjH9390z9KYlMN6fCRC4GnGjkVBdihP-RD6Y63U5g73_A9BiwYkvniJPbeTi6e50GnnzO";
-	const SECRET = "EGggxyvcp7pl60HFIiUoRJg-1nsNIQI9b7WQF_hdzkmK2RoX5EaC2153aaQMRCHj1QnJkmrFGoS2gM-R";
+	const IDCLIENTE = "";
+	const SECRET = "";
 	//LIVE PAYPAL
-	//const IDCLIENTE = "AbuLAnHKgYtraRXUzmkLxVn9DQ4D2zDQxlDhUcyWJpq2bbMS2Gs0aAW20qwZzEblQ0inKLUlZ_Tm6bB-";
+	//const IDCLIENTE = "";
 	//const URLPAYPAL = "https://api-m.paypal.com";
-	//const SECRET = "ELCYtuxTFft8kEuAhcg8jE7_Bi31BnMd8E4DilpsnnsgXnZRUA8AKiXHwOVSPVu7xFIDZYw_6AjXulyC";
+	//const SECRET = "";
 
 	//Datos envio de correo
 	const NOMBRE_REMITENTE = "Tienda Virtual";
